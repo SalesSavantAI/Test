@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Name Registry</title>
+<style>
+  html, body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, sans-serif;
+    background: #f7f7f8;
+    color: #222;
+  }
+  main {
+    max-width: 480px;
+    margin: 4rem auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  }
+  h1 { margin: 0 0 1.25rem; font-size: 1.4rem; }
+  form { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; }
+  input {
+    flex: 1;
+    padding: 0.55rem 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #d0d0d4;
+    border-radius: 6px;
+    outline: none;
+  }
+  input:focus { border-color: #222; }
+  button {
+    padding: 0.55rem 1rem;
+    font-size: 1rem;
+    border: none;
+    background: #222;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  button:disabled { opacity: 0.5; cursor: not-allowed; }
+  .status { font-size: 0.85rem; color: #888; margin-bottom: 0.5rem; }
+  .status.error { color: #c0392b; }
+  ul { list-style: none; padding: 0; margin: 0; }
+  li {
+    padding: 0.55rem 0;
+    border-bottom: 1px solid #eee;
+    font-size: 0.95rem;
+  }
+  li:last-child { border-bottom: none; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Name Registry</h1>
+  <form id="form">
+    <input id="name" placeholder="Type a name…" autocomplete="off" required>
+    <button type="submit">Save</button>
+  </form>
+  <div class="status" id="status">Loading…</div>
+  <ul id="list"></ul>
+</main>
+<script type="module">
+  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+
+  const SUPABASE_URL = 'https://spdxrmzwhacmbqctovdd.supabase.co'
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNwZHhybXp3aGFjbWJxY3RvdmRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2OTEwNDIsImV4cCI6MjA5NTI2NzA0Mn0.9kFNaPSXPtL1HhUagAYxtPj9W7nlfoVNfVmGMR3YeaA'
+
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+  const form = document.getElementById('form')
+  const input = document.getElementById('name')
+  const list = document.getElementById('list')
+  const status = document.getElementById('status')
+
+  function setStatus(text, isError = false) {
+    status.textContent = text
+    status.classList.toggle('error', isError)
+  }
+
+  function render(rows) {
+    list.innerHTML = ''
+    for (const row of rows) {
+      const li = document.createElement('li')
+      li.textContent = row.name
+      list.appendChild(li)
+    }
+  }
+
+  async function load() {
+    setStatus('Loading…')
+    const { data, error } = await supabase
+      .from('names')
+      .select('name, created_at')
+      .order('created_at', { ascending: false })
+    if (error) {
+      setStatus(`Error: ${error.message}`, true)
+      return
+    }
+    setStatus(`${data.length} name${data.length === 1 ? '' : 's'} saved`)
+    render(data)
+  }
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault()
+    const name = input.value.trim()
+    if (!name) return
+    const button = form.querySelector('button')
+    button.disabled = true
+    const { error } = await supabase.from('names').insert({ name })
+    button.disabled = false
+    if (error) {
+      setStatus(`Error: ${error.message}`, true)
+      return
+    }
+    input.value = ''
+    await load()
+  })
+
+  load()
+</script>
+</body>
+</html>
