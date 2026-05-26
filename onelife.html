@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Onelife Fitness × HubSpot — A Lifecycle Engine for Member Growth</title>
+<style>
+  :root {
+    --navy: #0b2545;
+    --navy-2: #13315c;
+    --ink: #1d1d1f;
+    --muted: #5e6776;
+    --line: #e6e8ec;
+    --bg: #faf9f7;
+    --card: #ffffff;
+    --orange: #ff7a59;
+    --orange-soft: #fff1ec;
+    --accent: #1a73e8;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Nav */
+  nav.top {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(250, 249, 247, 0.92);
+    backdrop-filter: saturate(140%) blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav.top .inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0.85rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.92rem;
+  }
+  nav.top .brand {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--navy);
+  }
+  nav.top .brand .x { color: var(--orange); margin: 0 0.4rem; font-weight: 500; }
+  nav.top .links { display: flex; gap: 1.5rem; color: var(--muted); }
+  nav.top .links a { color: var(--muted); }
+  nav.top .links a:hover { color: var(--navy); text-decoration: none; }
+
+  /* Section shell */
+  section {
+    padding: 5rem 1.5rem;
+    border-bottom: 1px solid var(--line);
+  }
+  section .inner {
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+  section.compact { padding: 3.5rem 1.5rem; }
+  .eyebrow {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--orange);
+    font-weight: 600;
+    margin-bottom: 0.85rem;
+  }
+  h1, h2, h3 { color: var(--navy); letter-spacing: -0.02em; margin: 0; }
+  h1 { font-size: 3.4rem; line-height: 1.08; font-weight: 700; }
+  h2 { font-size: 2.3rem; line-height: 1.18; font-weight: 700; margin-bottom: 1rem; }
+  h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; }
+  p.lede {
+    font-size: 1.25rem;
+    color: var(--muted);
+    max-width: 720px;
+    margin: 1rem 0 2rem;
+  }
+  p { margin: 0 0 1rem; }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+    padding: 6rem 1.5rem 4.5rem;
+  }
+  .hero h1 .accent {
+    color: var(--orange);
+    display: inline;
+  }
+  .hero .meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--orange-soft);
+    color: #b8451f;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.4rem 0.85rem;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.02em;
+  }
+  .hero .meta .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--orange);
+  }
+
+  /* KPI strip */
+  .kpi-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-top: 3rem;
+    padding: 1.75rem;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: 0 1px 3px rgba(11, 37, 69, 0.04);
+  }
+  .kpi { text-align: center; }
+  .kpi .num {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .kpi .num .plus { color: var(--orange); }
+  .kpi .label {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 0.5rem;
+    letter-spacing: 0.01em;
+  }
+  .kpi-strip .source {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 0.25rem;
+    padding-top: 0.5rem;
+    border-top: 1px dashed var(--line);
+  }
+
+  /* Three-col cards */
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 1.75rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(11, 37, 69, 0.06);
+  }
+  .card .tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--orange);
+    background: var(--orange-soft);
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+    margin-bottom: 0.85rem;
+    letter-spacing: 0.04em;
+  }
+  .card p:last-child { margin-bottom: 0; }
+  .card p { font-size: 0.95rem; color: var(--muted); }
+
+  /* Capability table */
+  .cap-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+  .cap-row {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 1rem;
+    align-items: start;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1rem 1.15rem;
+  }
+  .cap-row .id {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--orange);
+    background: var(--orange-soft);
+    padding: 0.25rem 0.45rem;
+    border-radius: 4px;
+    text-align: center;
+    align-self: start;
+  }
+  .cap-row .body strong {
+    display: block;
+    color: var(--navy);
+    font-size: 0.95rem;
+    margin-bottom: 0.15rem;
+  }
+  .cap-row .body span {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+
+  /* Crunch spotlight */
+  .spotlight {
+    background: var(--navy);
+    color: #fff;
+    border-radius: 18px;
+    padding: 3rem;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  .spotlight h2 { color: #fff; }
+  .spotlight .eyebrow { color: var(--orange); }
+  .spotlight p { color: rgba(255,255,255,0.78); }
+  .spotlight .stats {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+  .spotlight .stats ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 1.1rem;
+  }
+  .spotlight .stats li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 1.1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .spotlight .stats li:last-child { border-bottom: none; padding-bottom: 0; }
+  .spotlight .stats .big {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.02em;
+  }
+  .spotlight .stats .big .plus { color: var(--orange); }
+  .spotlight .stats .desc {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.65);
+    text-align: right;
+    max-width: 180px;
+  }
+
+  /* Quote */
+  .quote {
+    text-align: center;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+  .quote blockquote {
+    font-size: 1.6rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin: 0 0 1.5rem;
+  }
+  .quote blockquote::before { content: "“"; color: var(--orange); font-size: 2rem; margin-right: 0.1rem; }
+  .quote blockquote::after { content: "”"; color: var(--orange); font-size: 2rem; margin-left: 0.1rem; }
+  .quote cite {
+    font-style: normal;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .quote cite strong { color: var(--ink); display: block; margin-bottom: 0.1rem; }
+
+  /* Architecture diagram */
+  .arch {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 2rem;
+    margin-top: 2rem;
+  }
+  .arch .row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .arch .row.center {
+    grid-template-columns: 1fr;
+  }
+  .arch .box {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    text-align: center;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  .arch .box strong { display: block; color: var(--navy); font-size: 0.88rem; margin-bottom: 0.15rem; }
+  .arch .hub {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: #fff;
+    padding: 1.25rem;
+  }
+  .arch .hub strong { color: #fff; font-size: 1.05rem; }
+  .arch .hub .sub { color: rgba(255,255,255,0.85); font-size: 0.85rem; }
+  .arch .arrow {
+    text-align: center;
+    color: var(--muted);
+    font-size: 1.2rem;
+    line-height: 1;
+    padding: 0.2rem 0;
+  }
+  .arch-caption {
+    font-size: 0.82rem;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 1rem;
+    font-style: italic;
+  }
+
+  /* CTA */
+  .cta {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+    color: #fff;
+    text-align: center;
+    padding: 4.5rem 1.5rem;
+  }
+  .cta h2 { color: #fff; }
+  .cta p { color: rgba(255,255,255,0.8); max-width: 580px; margin: 1rem auto 2rem; }
+  .cta .btn {
+    display: inline-block;
+    background: var(--orange);
+    color: #fff;
+    font-weight: 600;
+    padding: 0.85rem 1.75rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .cta .btn:hover {
+    transform: translateY(-1px);
+    background: #ff6a45;
+    text-decoration: none;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+    background: var(--bg);
+  }
+
+  /* Responsive */
+  @media (max-width: 880px) {
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.6rem; }
+    .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: 1fr; }
+    .cap-grid { grid-template-columns: 1fr; }
+    .spotlight { grid-template-columns: 1fr; padding: 2rem; gap: 2rem; }
+    .arch .row { grid-template-columns: repeat(2, 1fr); }
+    nav.top .links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="inner">
+    <div class="brand">Onelife Fitness <span class="x">×</span> HubSpot</div>
+    <div class="links">
+      <a href="#proof">Proof</a>
+      <a href="#capabilities">What it does</a>
+      <a href="#architecture">How it fits</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="inner">
+    <span class="meta"><span class="dot"></span>FOR ONELIFE FITNESS</span>
+    <h1>A growth engine for 70+ clubs — <span class="accent">built for a 9-person marketing team.</span></h1>
+    <p class="lede">HubSpot brings member data, lifecycle journeys, and AI into one place — so Onelife can grow member lifetime value without growing a tech stack.</p>
+
+    <div class="kpi-strip" id="proof">
+      <div class="kpi"><div class="num">15M<span class="plus">+</span></div><div class="label">Emails sent monthly</div></div>
+      <div class="kpi"><div class="num">2M<span class="plus">+</span></div><div class="label">Leads collected in 2024</div></div>
+      <div class="kpi"><div class="num">1M<span class="plus">+</span></div><div class="label">Landing page views</div></div>
+      <div class="kpi"><div class="num">550<span class="plus">+</span></div><div class="label">Gyms activated</div></div>
+      <div class="source">Crunch Fitness on HubSpot — 50+ franchisees across 550+ locations</div>
+    </div>
+  </div>
+</section>
+
+<!-- OPPORTUNITY -->
+<section>
+  <div class="inner">
+    <div class="eyebrow">The opportunity</div>
+    <h2>Three things holding Onelife back today.</h2>
+    <p class="lede">Onelife is growing fast. The marketing stack hasn't kept up — and members feel it.</p>
+
+    <div class="grid-3">
+      <div class="card">
+        <span class="tag">DATA</span>
+        <h3>One member, many records.</h3>
+        <p>Every system tells a different story about the same person. No single view means no real personalization.</p>
+      </div>
+      <div class="card">
+        <span class="tag">CHANNELS</span>
+        <h3>Channels that don't talk to each other.</h3>
+        <p>An opt-out in one system doesn't always reach the next. Members get the wrong message at the wrong time.</p>
+      </div>
+      <div class="card">
+        <span class="tag">SPEED</span>
+        <h3>A platform marketers can actually run.</h3>
+        <p>No SQL. No engineering tickets. No multi-vendor integration project to staff.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CRUNCH SPOTLIGHT -->
+<section class="compact">
+  <div class="inner">
+    <div class="spotlight">
+      <div>
+        <div class="eyebrow">It's already working in the industry</div>
+        <h2>Crunch Fitness runs its marketing on HubSpot.</h2>
+        <p>50+ franchisees. 550+ gyms. One platform — handling personalization, lead capture, AI content, and reporting across every market.</p>
+        <p><a href="https://www.hubspot.com/case-studies/crunch-fitness" style="color: var(--orange);">Read the full case study →</a></p>
+      </div>
+      <div class="stats">
+        <ul>
+          <li><span class="big">15M<span class="plus">+</span></span><span class="desc">Emails sent every month</span></li>
+          <li><span class="big">2M<span class="plus">+</span></span><span class="desc">Leads collected in 2024</span></li>
+          <li><span class="big">1M<span class="plus">+</span></span><span class="desc">Landing page views</span></li>
+          <li><span class="big">50<span class="plus">+</span></span><span class="desc">Franchisees marketing independently</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT HUBSPOT DOES -->
+<section id="capabilities">
+  <div class="inner">
+    <div class="eyebrow">What HubSpot does for Onelife</div>
+    <h2>Six things, one platform.</h2>
+    <p class="lede">Everything Onelife asked for in the RFP — without stitching tools together.</p>
+
+    <div class="grid-3">
+      <div class="card">
+        <span class="tag">01</span>
+        <h3>Know every member.</h3>
+        <p>One unified profile per person — pulled from every system, anonymous or known.</p>
+      </div>
+      <div class="card">
+        <span class="tag">02</span>
+        <h3>Reach them at the right moment.</h3>
+        <p>Trigger journeys on behavior, timing, or the absence of expected signals.</p>
+      </div>
+      <div class="card">
+        <span class="tag">03</span>
+        <h3>Across every channel.</h3>
+        <p>Email, SMS, push, in-app, and paid media — coordinated from one place.</p>
+      </div>
+      <div class="card">
+        <span class="tag">04</span>
+        <h3>Honor every preference.</h3>
+        <p>One consent layer that every system respects — no missed opt-outs.</p>
+      </div>
+      <div class="card">
+        <span class="tag">05</span>
+        <h3>Powered by AI.</h3>
+        <p>Breeze writes copy, tests variations, and predicts who's likely to convert or churn.</p>
+      </div>
+      <div class="card">
+        <span class="tag">06</span>
+        <h3>Run by marketers.</h3>
+        <p>Visual journey builder. No SQL. No engineering tickets. No vendor handoffs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="architecture">
+  <div class="inner">
+    <div class="eyebrow">How it fits together</div>
+    <h2>One platform in the middle. Everything else stays where it is.</h2>
+    <p class="lede">Onelife's existing systems keep doing what they do best. HubSpot becomes the connective layer that makes them feel like one.</p>
+
+    <div class="arch">
+      <div class="row">
+        <div class="box"><strong>CSI</strong>Members & billing</div>
+        <div class="box"><strong>InTouch</strong>Club CRM</div>
+        <div class="box"><strong>MotionVibe</strong>Bookings & app</div>
+        <div class="box"><strong>Mobile + Web</strong>Behavior</div>
+      </div>
+      <div class="arrow">↓</div>
+      <div class="row center">
+        <div class="box hub">
+          <strong>HubSpot</strong>
+          <div class="sub">Member data · Lifecycle journeys · AI · All channels</div>
+        </div>
+      </div>
+      <div class="arrow">↓</div>
+      <div class="row">
+        <div class="box"><strong>Email</strong></div>
+        <div class="box"><strong>SMS &amp; Push</strong></div>
+        <div class="box"><strong>Paid media</strong></div>
+        <div class="box"><strong>Databricks</strong>Analytics</div>
+      </div>
+    </div>
+    <div class="arch-caption">One source of truth for the member — every channel and every report works from the same picture.</div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="compact">
+  <div class="inner">
+    <div class="quote">
+      <blockquote>With HubSpot, we built a marketing engine that works for real people. It's not just about performance metrics. It's about helping our franchisees become stronger partners to their members. That's how we win.</blockquote>
+      <cite>
+        <strong>Danielle Pakradooni</strong>
+        Vice President of Signature and Brand Marketing, Crunch Fitness
+      </cite>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section class="cta" id="next">
+  <div class="inner">
+    <h2>The right foundation for what's next.</h2>
+    <p>70+ clubs. A 9-person marketing team. One platform built for both.</p>
+  </div>
+</section>
+
+<footer>
+  Prepared for Onelife Fitness · RFP Response · Confidential
+</footer>
+
+</body>
+</html>
