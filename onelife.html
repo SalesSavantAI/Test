@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Onelife Fitness × HubSpot — A Lifecycle Engine for Member Growth</title>
+<title>Onelife Fitness × HubSpot</title>
 <style>
   :root {
     --navy: #0b2545;
@@ -92,7 +92,7 @@
   /* Hero */
   .hero {
     background: linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
-    padding: 6rem 1.5rem 4.5rem;
+    padding: 6rem 1.5rem 5rem;
   }
   .hero h1 .accent {
     color: var(--orange);
@@ -114,43 +114,6 @@
   .hero .meta .dot {
     width: 6px; height: 6px; border-radius: 50%;
     background: var(--orange);
-  }
-
-  /* KPI strip */
-  .kpi-strip {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-    margin-top: 3rem;
-    padding: 1.75rem;
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    box-shadow: 0 1px 3px rgba(11, 37, 69, 0.04);
-  }
-  .kpi { text-align: center; }
-  .kpi .num {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--navy);
-    letter-spacing: -0.03em;
-    line-height: 1;
-  }
-  .kpi .num .plus { color: var(--orange); }
-  .kpi .label {
-    font-size: 0.82rem;
-    color: var(--muted);
-    margin-top: 0.5rem;
-    letter-spacing: 0.01em;
-  }
-  .kpi-strip .source {
-    grid-column: 1 / -1;
-    text-align: center;
-    font-size: 0.75rem;
-    color: var(--muted);
-    margin-top: 0.25rem;
-    padding-top: 0.5rem;
-    border-top: 1px dashed var(--line);
   }
 
   /* Three-col cards */
@@ -183,47 +146,7 @@
     letter-spacing: 0.04em;
   }
   .card p:last-child { margin-bottom: 0; }
-  .card p { font-size: 0.95rem; color: var(--muted); }
-
-  /* Capability table */
-  .cap-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.75rem;
-    margin-top: 2rem;
-  }
-  .cap-row {
-    display: grid;
-    grid-template-columns: 90px 1fr;
-    gap: 1rem;
-    align-items: start;
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 1rem 1.15rem;
-  }
-  .cap-row .id {
-    font-family: ui-monospace, "SF Mono", Menlo, monospace;
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: var(--orange);
-    background: var(--orange-soft);
-    padding: 0.25rem 0.45rem;
-    border-radius: 4px;
-    text-align: center;
-    align-self: start;
-  }
-  .cap-row .body strong {
-    display: block;
-    color: var(--navy);
-    font-size: 0.95rem;
-    margin-bottom: 0.15rem;
-  }
-  .cap-row .body span {
-    font-size: 0.85rem;
-    color: var(--muted);
-    line-height: 1.45;
-  }
+  .card p { font-size: 0.97rem; color: var(--muted); }
 
   /* Crunch spotlight */
   .spotlight {
@@ -282,7 +205,7 @@
     margin: 0 auto;
   }
   .quote blockquote {
-    font-size: 1.6rem;
+    font-size: 1.55rem;
     line-height: 1.4;
     color: var(--navy);
     font-weight: 500;
@@ -298,80 +221,59 @@
   }
   .quote cite strong { color: var(--ink); display: block; margin-bottom: 0.1rem; }
 
-  /* Architecture diagram */
-  .arch {
+  /* Agenda list */
+  .agenda {
+    margin-top: 2.5rem;
+    display: grid;
+    gap: 0.75rem;
+  }
+  .agenda-row {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 1.5rem;
+    align-items: center;
     background: var(--card);
     border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 2rem;
-    margin-top: 2rem;
+    border-radius: 12px;
+    padding: 1.15rem 1.5rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
   }
-  .arch .row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.75rem;
-    margin-bottom: 0.75rem;
-  }
-  .arch .row.center {
-    grid-template-columns: 1fr;
-  }
-  .arch .box {
-    background: var(--bg);
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 0.85rem 1rem;
-    text-align: center;
-    font-size: 0.82rem;
-    color: var(--muted);
-  }
-  .arch .box strong { display: block; color: var(--navy); font-size: 0.88rem; margin-bottom: 0.15rem; }
-  .arch .hub {
-    background: var(--orange);
+  .agenda-row:hover {
+    transform: translateX(2px);
+    box-shadow: 0 4px 16px rgba(11, 37, 69, 0.05);
     border-color: var(--orange);
-    color: #fff;
-    padding: 1.25rem;
   }
-  .arch .hub strong { color: #fff; font-size: 1.05rem; }
-  .arch .hub .sub { color: rgba(255,255,255,0.85); font-size: 0.85rem; }
-  .arch .arrow {
+  .agenda-row .num {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--orange);
+    letter-spacing: -0.02em;
     text-align: center;
-    color: var(--muted);
-    font-size: 1.2rem;
-    line-height: 1;
-    padding: 0.2rem 0;
   }
-  .arch-caption {
-    font-size: 0.82rem;
+  .agenda-row .body strong {
+    display: block;
+    color: var(--navy);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.15rem;
+    letter-spacing: -0.01em;
+  }
+  .agenda-row .body span {
+    font-size: 0.93rem;
     color: var(--muted);
-    text-align: center;
-    margin-top: 1rem;
-    font-style: italic;
+    line-height: 1.45;
   }
 
-  /* CTA */
-  .cta {
+  /* Closing */
+  .closing {
     background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
     color: #fff;
     text-align: center;
-    padding: 4.5rem 1.5rem;
+    padding: 5rem 1.5rem;
   }
-  .cta h2 { color: #fff; }
-  .cta p { color: rgba(255,255,255,0.8); max-width: 580px; margin: 1rem auto 2rem; }
-  .cta .btn {
-    display: inline-block;
-    background: var(--orange);
-    color: #fff;
-    font-weight: 600;
-    padding: 0.85rem 1.75rem;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    transition: transform 0.15s ease, background 0.15s ease;
-  }
-  .cta .btn:hover {
-    transform: translateY(-1px);
-    background: #ff6a45;
-    text-decoration: none;
-  }
+  .closing h2 { color: #fff; }
+  .closing p { color: rgba(255,255,255,0.8); max-width: 580px; margin: 1rem auto 0; font-size: 1.15rem; }
 
   /* Footer */
   footer {
@@ -384,13 +286,12 @@
 
   /* Responsive */
   @media (max-width: 880px) {
-    h1 { font-size: 2.2rem; }
-    h2 { font-size: 1.6rem; }
-    .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+    h1 { font-size: 2.3rem; }
+    h2 { font-size: 1.7rem; }
     .grid-3 { grid-template-columns: 1fr; }
-    .cap-grid { grid-template-columns: 1fr; }
     .spotlight { grid-template-columns: 1fr; padding: 2rem; gap: 2rem; }
-    .arch .row { grid-template-columns: repeat(2, 1fr); }
+    .agenda-row { grid-template-columns: 48px 1fr; gap: 1rem; padding: 1rem; }
+    .agenda-row .num { font-size: 1.2rem; }
     nav.top .links { display: none; }
   }
 </style>
@@ -401,9 +302,10 @@
   <div class="inner">
     <div class="brand">Onelife Fitness <span class="x">×</span> HubSpot</div>
     <div class="links">
-      <a href="#proof">Proof</a>
-      <a href="#capabilities">What it does</a>
-      <a href="#architecture">How it fits</a>
+      <a href="#hubspot">HubSpot</a>
+      <a href="#for-gyms">For gyms</a>
+      <a href="#crunch">Crunch</a>
+      <a href="#agenda">Today's agenda</a>
     </div>
   </div>
 </nav>
@@ -412,52 +314,71 @@
 <section class="hero">
   <div class="inner">
     <span class="meta"><span class="dot"></span>FOR ONELIFE FITNESS</span>
-    <h1>A growth engine for 70+ clubs — <span class="accent">built for a 9-person marketing team.</span></h1>
-    <p class="lede">HubSpot brings member data, lifecycle journeys, and AI into one place — so Onelife can grow member lifetime value without growing a tech stack.</p>
+    <h1>One platform for the way <span class="accent">members actually grow.</span></h1>
+    <p class="lede">A quick tour: what HubSpot is, why it works for gyms, how Crunch Fitness uses it today, and the seven scenarios we'll walk through together.</p>
+  </div>
+</section>
 
-    <div class="kpi-strip" id="proof">
-      <div class="kpi"><div class="num">15M<span class="plus">+</span></div><div class="label">Emails sent monthly</div></div>
-      <div class="kpi"><div class="num">2M<span class="plus">+</span></div><div class="label">Leads collected in 2024</div></div>
-      <div class="kpi"><div class="num">1M<span class="plus">+</span></div><div class="label">Landing page views</div></div>
-      <div class="kpi"><div class="num">550<span class="plus">+</span></div><div class="label">Gyms activated</div></div>
-      <div class="source">Crunch Fitness on HubSpot — 50+ franchisees across 550+ locations</div>
+<!-- WHAT IS HUBSPOT -->
+<section id="hubspot">
+  <div class="inner">
+    <div class="eyebrow">First — what is HubSpot?</div>
+    <h2>The customer platform that grows with you.</h2>
+    <p class="lede">HubSpot brings marketing, sales, service, and customer data into one place — connected by a single view of every person you talk to, and powered by AI from day one.</p>
+
+    <div class="grid-3">
+      <div class="card">
+        <span class="tag">SMART CRM</span>
+        <h3>One person, one record.</h3>
+        <p>Every interaction — a website visit, a form fill, a class booking — connected to the same profile. No more split histories across tools.</p>
+      </div>
+      <div class="card">
+        <span class="tag">MARKETING &amp; ENGAGEMENT</span>
+        <h3>Every channel, one playbook.</h3>
+        <p>Email, SMS, push, in-app, paid media — drawn from the same audiences, with consent and frequency rules built in.</p>
+      </div>
+      <div class="card">
+        <span class="tag">BREEZE AI</span>
+        <h3>AI on by default.</h3>
+        <p>Drafts content, predicts who's likely to convert or churn, and runs experiments — without an analyst on call.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- OPPORTUNITY -->
-<section>
+<!-- HUBSPOT FOR GYMS -->
+<section id="for-gyms">
   <div class="inner">
-    <div class="eyebrow">The opportunity</div>
-    <h2>Three things holding Onelife back today.</h2>
-    <p class="lede">Onelife is growing fast. The marketing stack hasn't kept up — and members feel it.</p>
+    <div class="eyebrow">Why HubSpot works for gyms</div>
+    <h2>From first touch to lifetime member.</h2>
+    <p class="lede">Fitness brands run the most signal-rich, time-sensitive marketing in the world. Every check-in, missed class, and PT booking matters. HubSpot turns those signals into the right next message — automatically.</p>
 
     <div class="grid-3">
       <div class="card">
-        <span class="tag">DATA</span>
-        <h3>One member, many records.</h3>
-        <p>Every system tells a different story about the same person. No single view means no real personalization.</p>
+        <span class="tag">ACQUIRE</span>
+        <h3>Prospect → Lead → Join.</h3>
+        <p>Capture leads from web, paid, and walk-ins. Nurture across channels. Lift tour-to-sign-up conversion at every step.</p>
       </div>
       <div class="card">
-        <span class="tag">CHANNELS</span>
-        <h3>Channels that don't talk to each other.</h3>
-        <p>An opt-out in one system doesn't always reach the next. Members get the wrong message at the wrong time.</p>
+        <span class="tag">ACTIVATE</span>
+        <h3>The first 30 days.</h3>
+        <p>Get new members in the door, booked into onboarding, and into a routine — the single biggest predictor of long-term retention.</p>
       </div>
       <div class="card">
-        <span class="tag">SPEED</span>
-        <h3>A platform marketers can actually run.</h3>
-        <p>No SQL. No engineering tickets. No multi-vendor integration project to staff.</p>
+        <span class="tag">RETAIN</span>
+        <h3>Engagement → Save → Win-back.</h3>
+        <p>Spot attendance decline early. Trigger save offers at cancel. Bring lapsed members back with the right hook at the right time.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- CRUNCH SPOTLIGHT -->
-<section class="compact">
+<section id="crunch" class="compact">
   <div class="inner">
     <div class="spotlight">
       <div>
-        <div class="eyebrow">It's already working in the industry</div>
+        <div class="eyebrow">Proof in the industry</div>
         <h2>Crunch Fitness runs its marketing on HubSpot.</h2>
         <p>50+ franchisees. 550+ gyms. One platform — handling personalization, lead capture, AI content, and reporting across every market.</p>
         <p><a href="https://www.hubspot.com/case-studies/crunch-fitness" style="color: var(--orange);">Read the full case study →</a></p>
@@ -474,104 +395,90 @@
   </div>
 </section>
 
-<!-- WHAT HUBSPOT DOES -->
-<section id="capabilities">
-  <div class="inner">
-    <div class="eyebrow">What HubSpot does for Onelife</div>
-    <h2>Six things, one platform.</h2>
-    <p class="lede">Everything Onelife asked for in the RFP — without stitching tools together.</p>
-
-    <div class="grid-3">
-      <div class="card">
-        <span class="tag">01</span>
-        <h3>Know every member.</h3>
-        <p>One unified profile per person — pulled from every system, anonymous or known.</p>
-      </div>
-      <div class="card">
-        <span class="tag">02</span>
-        <h3>Reach them at the right moment.</h3>
-        <p>Trigger journeys on behavior, timing, or the absence of expected signals.</p>
-      </div>
-      <div class="card">
-        <span class="tag">03</span>
-        <h3>Across every channel.</h3>
-        <p>Email, SMS, push, in-app, and paid media — coordinated from one place.</p>
-      </div>
-      <div class="card">
-        <span class="tag">04</span>
-        <h3>Honor every preference.</h3>
-        <p>One consent layer that every system respects — no missed opt-outs.</p>
-      </div>
-      <div class="card">
-        <span class="tag">05</span>
-        <h3>Powered by AI.</h3>
-        <p>Breeze writes copy, tests variations, and predicts who's likely to convert or churn.</p>
-      </div>
-      <div class="card">
-        <span class="tag">06</span>
-        <h3>Run by marketers.</h3>
-        <p>Visual journey builder. No SQL. No engineering tickets. No vendor handoffs.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ARCHITECTURE -->
-<section id="architecture">
-  <div class="inner">
-    <div class="eyebrow">How it fits together</div>
-    <h2>One platform in the middle. Everything else stays where it is.</h2>
-    <p class="lede">Onelife's existing systems keep doing what they do best. HubSpot becomes the connective layer that makes them feel like one.</p>
-
-    <div class="arch">
-      <div class="row">
-        <div class="box"><strong>CSI</strong>Members & billing</div>
-        <div class="box"><strong>InTouch</strong>Club CRM</div>
-        <div class="box"><strong>MotionVibe</strong>Bookings & app</div>
-        <div class="box"><strong>Mobile + Web</strong>Behavior</div>
-      </div>
-      <div class="arrow">↓</div>
-      <div class="row center">
-        <div class="box hub">
-          <strong>HubSpot</strong>
-          <div class="sub">Member data · Lifecycle journeys · AI · All channels</div>
-        </div>
-      </div>
-      <div class="arrow">↓</div>
-      <div class="row">
-        <div class="box"><strong>Email</strong></div>
-        <div class="box"><strong>SMS &amp; Push</strong></div>
-        <div class="box"><strong>Paid media</strong></div>
-        <div class="box"><strong>Databricks</strong>Analytics</div>
-      </div>
-    </div>
-    <div class="arch-caption">One source of truth for the member — every channel and every report works from the same picture.</div>
-  </div>
-</section>
-
 <!-- QUOTE -->
 <section class="compact">
   <div class="inner">
     <div class="quote">
-      <blockquote>With HubSpot, we built a marketing engine that works for real people. It's not just about performance metrics. It's about helping our franchisees become stronger partners to their members. That's how we win.</blockquote>
+      <blockquote>With HubSpot, we built a marketing engine that works for real people. It's not just about performance metrics. It's about helping our franchisees become stronger partners to their members.</blockquote>
       <cite>
         <strong>Danielle Pakradooni</strong>
-        Vice President of Signature and Brand Marketing, Crunch Fitness
+        VP of Signature and Brand Marketing, Crunch Fitness
       </cite>
     </div>
   </div>
 </section>
 
-<!-- CLOSING -->
-<section class="cta" id="next">
+<!-- AGENDA: 7 USE CASES -->
+<section id="agenda">
   <div class="inner">
-    <h2>The right foundation for what's next.</h2>
-    <p>70+ clubs. A 9-person marketing team. One platform built for both.</p>
+    <div class="eyebrow">Today's agenda</div>
+    <h2>Seven scenarios. One platform.</h2>
+    <p class="lede">We'll walk through each of the lifecycle scenarios from your RFP — and show how HubSpot handles all seven without bolting on extra systems.</p>
+
+    <div class="agenda">
+      <div class="agenda-row">
+        <div class="num">01</div>
+        <div class="body">
+          <strong>The new member journey</strong>
+          <span>Driving activation in the first 30 days — app download, first visit, onboarding session, group fitness.</span>
+        </div>
+      </div>
+      <div class="agenda-row">
+        <div class="num">02</div>
+        <div class="body">
+          <strong>Multi-channel engagement</strong>
+          <span>Right offer, right channel — SMS, email, or in-app — based on each member's preferences.</span>
+        </div>
+      </div>
+      <div class="agenda-row">
+        <div class="num">03</div>
+        <div class="body">
+          <strong>Lead-to-join conversion</strong>
+          <span>Lifting conversion across every touchpoint — website, email, SMS — with coordinated follow-up.</span>
+        </div>
+      </div>
+      <div class="agenda-row">
+        <div class="num">04</div>
+        <div class="body">
+          <strong>Smarter media spend</strong>
+          <span>Closing the loop from a Meta lead to a walk-in join ten days later — and using it to improve the next campaign.</span>
+        </div>
+      </div>
+      <div class="agenda-row">
+        <div class="num">05</div>
+        <div class="body">
+          <strong>When two rules collide</strong>
+          <span>How HubSpot decides which journey wins — and how fast it can act in production.</span>
+        </div>
+      </div>
+      <div class="agenda-row">
+        <div class="num">06</div>
+        <div class="body">
+          <strong>Opt-outs that actually stick</strong>
+          <span>A member opts out at 2pm — every system, including the club's tools, knows by 2:05pm.</span>
+        </div>
+      </div>
+      <div class="agenda-row">
+        <div class="num">07</div>
+        <div class="body">
+          <strong>Real-time race conditions</strong>
+          <span>What happens when an event arrives before the profile is ready — and how HubSpot avoids dropping it.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section class="closing">
+  <div class="inner">
+    <h2>Let's walk through them together.</h2>
+    <p>Seven scenarios, one platform, built for the way Onelife wants to grow.</p>
   </div>
 </section>
 
 <footer>
-  Prepared for Onelife Fitness · RFP Response · Confidential
+  Prepared for Onelife Fitness · Confidential
 </footer>
 
 </body>
