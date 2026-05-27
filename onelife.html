@@ -284,11 +284,87 @@
     background: var(--bg);
   }
 
+  /* Principles trio — Easy / Fast / Unified */
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin: 1.75rem 0 0.25rem;
+    padding: 1.5rem 1.75rem;
+    background: var(--orange-soft);
+    border-radius: 14px;
+  }
+  .principles .p-item .label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--orange);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+  }
+  .principles .p-item p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+
+  /* Platform overview — hubs grid */
+  .platform-intro {
+    margin-top: 2.75rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--line);
+  }
+  .platform-intro .sub {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+  }
+  .platform-intro h3 {
+    font-size: 1.35rem;
+    margin: 0 0 1.25rem;
+    color: var(--ink);
+  }
+  .hub-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.85rem;
+  }
+  .hub {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+  }
+  .hub .hub-name {
+    display: block;
+    font-weight: 700;
+    font-size: 0.98rem;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+  }
+  .hub .hub-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+  .hub.featured {
+    background: var(--navy);
+    border-color: var(--navy);
+  }
+  .hub.featured .hub-name { color: #fff; }
+  .hub.featured .hub-desc { color: rgba(255,255,255,0.75); }
+
   /* Responsive */
   @media (max-width: 880px) {
     h1 { font-size: 2.3rem; }
     h2 { font-size: 1.7rem; }
     .grid-3 { grid-template-columns: 1fr; }
+    .principles { grid-template-columns: 1fr; padding: 1.25rem; }
+    .hub-grid { grid-template-columns: repeat(2, 1fr); }
     .spotlight { grid-template-columns: 1fr; padding: 2rem; gap: 2rem; }
     .agenda-row { grid-template-columns: 48px 1fr; gap: 1rem; padding: 1rem; }
     .agenda-row .num { font-size: 1.2rem; }
@@ -326,6 +402,21 @@
     <h2>The customer platform that grows with you.</h2>
     <p class="lede">HubSpot brings marketing, sales, service, and customer data into one place — connected by a single view of every person you talk to, and powered by AI from day one.</p>
 
+    <div class="principles">
+      <div class="p-item">
+        <span class="label">Easy</span>
+        <p>Intuitive to learn and painless to use. High adoption means real value — not shelfware.</p>
+      </div>
+      <div class="p-item">
+        <span class="label">Fast</span>
+        <p>Immediate value in weeks, not months or years. No 12-month rollout to wait through.</p>
+      </div>
+      <div class="p-item">
+        <span class="label">Unified</span>
+        <p>All your data, tools, and teams on one platform — a complete view of every customer.</p>
+      </div>
+    </div>
+
     <div class="grid-3">
       <div class="card">
         <span class="tag">SMART CRM</span>
@@ -341,6 +432,45 @@
         <span class="tag">BREEZE AI</span>
         <h3>AI on by default.</h3>
         <p>Drafts content, predicts who's likely to convert or churn, and runs experiments — without an analyst on call.</p>
+      </div>
+    </div>
+
+    <div class="platform-intro">
+      <div class="sub">The customer platform at a glance</div>
+      <h3>One platform. Six hubs. Every team in sync.</h3>
+      <div class="hub-grid">
+        <div class="hub featured">
+          <span class="hub-name">Smart CRM</span>
+          <span class="hub-desc">Unify customer data, teams, and tech stack.</span>
+        </div>
+        <div class="hub">
+          <span class="hub-name">Marketing Hub</span>
+          <span class="hub-desc">Generate leads and automate marketing.</span>
+        </div>
+        <div class="hub">
+          <span class="hub-name">Sales Hub</span>
+          <span class="hub-desc">Build pipeline and close deals.</span>
+        </div>
+        <div class="hub">
+          <span class="hub-name">Service Hub</span>
+          <span class="hub-desc">Scale support and drive retention.</span>
+        </div>
+        <div class="hub">
+          <span class="hub-name">Content Hub</span>
+          <span class="hub-desc">Create and manage content.</span>
+        </div>
+        <div class="hub">
+          <span class="hub-name">Commerce Hub</span>
+          <span class="hub-desc">Quote faster and automate billing.</span>
+        </div>
+        <div class="hub">
+          <span class="hub-name">Data Hub</span>
+          <span class="hub-desc">Combine and enhance customer data.</span>
+        </div>
+        <div class="hub featured">
+          <span class="hub-name">Breeze AI</span>
+          <span class="hub-desc">AI assistants and agents across every hub.</span>
+        </div>
       </div>
     </div>
   </div>
