@@ -148,6 +148,40 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
 .reveal.in{opacity:1;transform:none;}
 .reveal.d1{transition-delay:.08s;} .reveal.d2{transition-delay:.16s;} .reveal.d3{transition-delay:.24s;}
 
+/* ============================================================ FLOW DIAGRAM (designed, not a screenshot) ============================================================ */
+.flowcard{background:var(--steel-900);border:1px solid var(--steel-line);border-radius:10px;padding:clamp(1.3rem,2.4vw,1.9rem);box-shadow:0 24px 60px -28px rgba(0,0,0,.55);display:flex;flex-direction:column;gap:1.2rem;}
+.flowcard__cap{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--on-dark-dim);}
+.flow{display:flex;align-items:center;gap:clamp(.5rem,1.4vw,.9rem);}
+.flow__triggers{display:flex;flex-direction:column;gap:.5rem;flex:1 1 0;min-width:0;}
+.trigger{font-family:var(--mono);font-size:.7rem;letter-spacing:.05em;color:var(--on-dark-dim);border:1px solid var(--steel-line);border-radius:5px;padding:.5rem .65rem;background:var(--steel-800);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.flow__arrow{flex:none;color:var(--accent);font-size:1.25rem;line-height:1;}
+.flow__node{flex:none;border-radius:8px;padding:.85rem .9rem;text-align:center;font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;}
+.node--warm{border:1px solid var(--accent);color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 4px var(--accent-soft);}
+.node--sent{border:1px solid var(--steel-line);color:var(--on-dark);background:var(--steel-800);max-width:9rem;white-space:normal;line-height:1.3;}
+.flow__foot{font-family:var(--sans);font-size:.8rem;color:var(--on-dark-dim);}
+
+/* ============================================================ CHANNEL CARDS (designed, not a screenshot) ============================================================ */
+.channels{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;}
+.channel{border:1px solid var(--steel-line);border-radius:8px;padding:clamp(.9rem,1.6vw,1.2rem);background:var(--steel-900);}
+.channel__lbl{display:block;font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--on-dark);margin-bottom:.5rem;}
+.channel p{font-size:.86rem;line-height:1.4;color:var(--on-dark-dim);}
+
+/* ============================================================ LIGHTBOX ============================================================ */
+.frame--zoom .frame__body{cursor:zoom-in;}
+.frame--zoom .frame__body:focus-visible{outline:3px solid var(--accent-soft);outline-offset:2px;}
+.frame__expand{position:absolute;top:.6rem;right:.6rem;width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;background:rgba(22,25,29,.66);backdrop-filter:blur(4px);opacity:0;transition:opacity .2s ease;pointer-events:none;}
+.frame--zoom:hover .frame__expand,.frame--zoom:focus-within .frame__expand{opacity:1;}
+.lightbox{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:clamp(1rem,4vw,3rem);background:rgba(22,25,29,.85);backdrop-filter:blur(8px);opacity:0;transition:opacity .22s ease;}
+.lightbox[hidden]{display:none;}
+.lightbox.open{opacity:1;}
+.lightbox__fig{display:flex;flex-direction:column;align-items:center;gap:1rem;max-width:92vw;max-height:90vh;transform:scale(.96);transition:transform .22s ease;}
+.lightbox.open .lightbox__fig{transform:none;}
+.lightbox__img{display:block;max-width:92vw;max-height:80vh;width:auto;height:auto;object-fit:contain;border-radius:8px;box-shadow:0 30px 80px -20px rgba(0,0,0,.7);background:#fff;}
+.lightbox__cap{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--on-dark-dim);text-align:center;max-width:60ch;}
+.lightbox__close{position:fixed;top:clamp(1rem,3vw,2rem);right:clamp(1rem,3vw,2rem);width:44px;height:44px;border-radius:8px;border:1px solid var(--steel-line);background:rgba(22,25,29,.6);color:var(--on-dark);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s ease;}
+.lightbox__close:hover{background:rgba(40,45,51,.85);}
+.lightbox__close:focus-visible{outline:3px solid var(--accent-soft);outline-offset:2px;}
+
 /* ============================================================ RESPONSIVE ============================================================ */
 @media(max-width:860px){
   .split,.split--wide{grid-template-columns:1fr;}
@@ -160,10 +194,18 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
   .steps{grid-template-columns:1fr;}
   .dots{display:none;}
   .display{max-width:100%;}
+  .flow{flex-direction:column;align-items:stretch;}
+  .flow__triggers{flex:none;}
+  .flow__arrow{align-self:center;transform:rotate(90deg);}
+  .node--sent{max-width:none;}
+}
+@media(max-width:480px){
+  .channels{grid-template-columns:1fr;}
 }
 @media(prefers-reduced-motion:reduce){
   *{scroll-behavior:auto!important;}
   .reveal{opacity:1;transform:none;transition:none;}
+  .lightbox,.lightbox__fig,.frame__expand{transition:none!important;}
 }
 </style>
 </head>
@@ -310,12 +352,21 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
             <img class="shot" src="screenshot-4.jpg" alt="Activity feed showing companies and people engaging on your site">
           </div>
         </div>
-        <div class="frame">
-          <div class="frame__bar"><i></i><i></i><i></i><span class="frame__cap">Automated lead handoff</span></div>
-          <div class="frame__body">
-            <!-- SWAP: <img class="shot" src="screenshot-5.png" alt="Automated lead handoff to sales"> -->
-            <div class="slot">[ SCREENSHOT 5 ]<br>Hot leads routed to sales automatically</div>
+        <div class="flowcard">
+          <span class="flowcard__cap">Example: automated lead handoff</span>
+          <div class="flow">
+            <div class="flow__triggers">
+              <div class="trigger">Views the pricing page</div>
+              <div class="trigger">Opens a key email</div>
+              <div class="trigger">Returns three times</div>
+              <div class="trigger">Fills out a form</div>
+            </div>
+            <div class="flow__arrow" aria-hidden="true">&rarr;</div>
+            <div class="flow__node node--warm">Warm lead</div>
+            <div class="flow__arrow" aria-hidden="true">&rarr;</div>
+            <div class="flow__node node--sent">Sent to sales instantly</div>
           </div>
+          <p class="flow__foot">An example of a rule we can set up, not a feature already built.</p>
         </div>
       </div>
     </div>
@@ -334,12 +385,13 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
           <p class="lede">Show up where buyers search now, including AI search, and create content faster than before. The reach grows without growing the team.</p>
           <p class="aside">The same engine can support parts and service down the road, whenever you decide to turn it on.</p>
         </div>
-        <div class="frame">
-          <div class="frame__bar"><i></i><i></i><i></i><span class="frame__cap">AI search visibility</span></div>
-          <div class="frame__body">
-            <!-- SWAP: <img class="shot" src="screenshot-6.png" alt="AI search visibility ranking"> -->
-            <div class="slot">[ SCREENSHOT 6 ]<br>See how often you show up in AI search</div>
-          </div>
+        <div class="channels">
+          <div class="channel"><span class="channel__lbl">Blogs</span><p>Answer the questions buyers type into search.</p></div>
+          <div class="channel"><span class="channel__lbl">Podcasts</span><p>Reach buyers who would rather listen than read.</p></div>
+          <div class="channel"><span class="channel__lbl">AI search · AEO</span><p>Show up when buyers ask AI where to buy.</p></div>
+          <div class="channel"><span class="channel__lbl">Social</span><p>Stay in front of buyers between purchases.</p></div>
+          <div class="channel"><span class="channel__lbl">Video</span><p>Show the machines at work in minutes.</p></div>
+          <div class="channel"><span class="channel__lbl">Email</span><p>Reach your whole list in one send.</p></div>
         </div>
       </div>
     </div>
@@ -406,6 +458,16 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
 
 </main>
 
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Expanded screenshot" hidden>
+  <button class="lightbox__close" id="lbClose" type="button" aria-label="Close expanded screenshot">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <figure class="lightbox__fig">
+    <img class="lightbox__img" id="lbImg" src="" alt="" />
+    <figcaption class="lightbox__cap" id="lbCap"></figcaption>
+  </figure>
+</div>
+
 <script>
 const scroller=document.getElementById('scroll');
 const sections=[...document.querySelectorAll('.section')];
@@ -441,6 +503,51 @@ const io=new IntersectionObserver((entries)=>{
   });
 },{threshold:.55});
 sections.forEach(s=>io.observe(s));
+
+/* ---- click-to-expand lightbox (real screenshots only) ---- */
+const lb=document.getElementById('lightbox');
+const lbImg=document.getElementById('lbImg');
+const lbCap=document.getElementById('lbCap');
+const lbClose=document.getElementById('lbClose');
+let lbTrigger=null;
+const expandIcon='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>';
+function openLightbox(frame){
+  const img=frame.querySelector('img.shot');if(!img)return;
+  const cap=frame.querySelector('.frame__cap');
+  const capText=cap?cap.textContent.trim():'';
+  lbImg.src=img.currentSrc||img.src;
+  lbImg.alt=img.alt||'';
+  lbCap.textContent=capText;
+  lb.setAttribute('aria-label',(capText||'Screenshot')+', expanded');
+  lbTrigger=frame.querySelector('.frame__body')||frame;
+  lb.hidden=false;
+  if(reduce){lb.classList.add('open');}else{requestAnimationFrame(()=>lb.classList.add('open'));}
+  lbClose.focus();
+  document.addEventListener('keydown',onLbKey);
+}
+function closeLightbox(){
+  lb.classList.remove('open');
+  document.removeEventListener('keydown',onLbKey);
+  const finish=(e)=>{if(e&&e.target!==lb)return;lb.hidden=true;lbImg.src='';lb.removeEventListener('transitionend',finish);};
+  if(reduce){finish();}else{lb.addEventListener('transitionend',finish);}
+  if(lbTrigger){lbTrigger.focus();lbTrigger=null;}
+}
+function onLbKey(e){if(e.key==='Escape')closeLightbox();}
+lbClose.addEventListener('click',closeLightbox);
+lb.addEventListener('click',e=>{if(e.target===lb)closeLightbox();});
+[...document.querySelectorAll('.frame')].filter(f=>f.querySelector('img.shot')).forEach(f=>{
+  f.classList.add('frame--zoom');
+  const body=f.querySelector('.frame__body');
+  const cap=f.querySelector('.frame__cap');
+  body.setAttribute('tabindex','0');
+  body.setAttribute('role','button');
+  body.setAttribute('aria-label','Expand screenshot'+(cap?': '+cap.textContent.trim():''));
+  const ic=document.createElement('span');
+  ic.className='frame__expand';ic.setAttribute('aria-hidden','true');ic.innerHTML=expandIcon;
+  body.appendChild(ic);
+  body.addEventListener('click',()=>openLightbox(f));
+  body.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openLightbox(f);}});
+});
 </script>
 </body>
 </html>
