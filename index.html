@@ -1,124 +1,437 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Name Registry</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Waukesha-Pearce Industries × HubSpot · Executive Briefing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,600;125,700;125,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
-  html, body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: system-ui, -apple-system, sans-serif;
-    background: #f7f7f8;
-    color: #222;
-  }
-  main {
-    max-width: 480px;
-    margin: 4rem auto;
-    padding: 2rem;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
-  }
-  h1 { margin: 0 0 1.25rem; font-size: 1.4rem; }
-  form { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; }
-  input {
-    flex: 1;
-    padding: 0.55rem 0.75rem;
-    font-size: 1rem;
-    border: 1px solid #d0d0d4;
-    border-radius: 6px;
-    outline: none;
-  }
-  input:focus { border-color: #222; }
-  button {
-    padding: 0.55rem 1rem;
-    font-size: 1rem;
-    border: none;
-    background: #222;
-    color: #fff;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  button:disabled { opacity: 0.5; cursor: not-allowed; }
-  .status { font-size: 0.85rem; color: #888; margin-bottom: 0.5rem; }
-  .status.error { color: #c0392b; }
-  ul { list-style: none; padding: 0; margin: 0; }
-  li {
-    padding: 0.55rem 0;
-    border-bottom: 1px solid #eee;
-    font-size: 0.95rem;
-  }
-  li:last-child { border-bottom: none; }
+/* ============================================================ TOKENS ============================================================ */
+:root{
+  --steel-900:#16191D; --steel-800:#1C2025; --steel-700:#262B31;
+  --steel-line:rgba(255,255,255,0.10);
+  --paper:#EBEDEF; --paper-panel:#FFFFFF;
+  --ink-900:#15181C; --ink-600:#565D66; --ink-line:rgba(20,24,28,0.12);
+  --accent:#FF5C35; --accent-soft:rgba(255,92,53,0.12);
+  --on-dark:#F3F4F5; --on-dark-dim:#9CA3AB;
+  --maxw:1140px;
+  --pad-y:clamp(4.5rem,9vh,7.5rem); --pad-x:clamp(1.4rem,5vw,4rem);
+  --fs-display:clamp(2.35rem,5.4vw,4.5rem);
+  --fs-lede:clamp(1.05rem,1.55vw,1.4rem);
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --sans:'IBM Plex Sans',system-ui,sans-serif;
+  --display:'Archivo','Archivo Expanded',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+.scroll{height:100svh;overflow-y:auto;scroll-snap-type:y mandatory;scroll-behavior:smooth;}
+
+/* ============================================================ SECTION SHELL ============================================================ */
+.section{position:relative;min-height:100svh;scroll-snap-align:start;display:flex;align-items:center;padding:var(--pad-y) var(--pad-x);overflow:hidden;}
+.section__inner{width:100%;max-width:var(--maxw);margin:0 auto;position:relative;z-index:2;}
+.s-dark{background:var(--steel-900);color:var(--on-dark);}
+.s-darker{background:var(--steel-800);color:var(--on-dark);}
+.s-light{background:var(--paper);color:var(--ink-900);}
+.s-dark::before,.s-darker::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,0.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.022) 1px,transparent 1px);
+  background-size:58px 58px;mask-image:radial-gradient(ellipse 90% 80% at 50% 40%,#000 35%,transparent 100%);}
+
+/* ============================================================ SPEC PLATE / EYEBROW ============================================================ */
+.plate{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.7rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;padding:.5rem .8rem;border:1px solid var(--steel-line);border-radius:3px;color:var(--on-dark-dim);}
+.s-light .plate{border-color:var(--ink-line);color:var(--ink-600);}
+.plate .tick{width:7px;height:7px;background:var(--accent);border-radius:1px;}
+.eyebrow-row{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:2.2rem;flex-wrap:wrap;}
+.index{font-family:var(--mono);font-size:.7rem;letter-spacing:.22em;color:var(--on-dark-dim);text-transform:uppercase;}
+.s-light .index{color:var(--ink-600);}
+.index b{color:var(--accent);font-weight:600;}
+
+/* ============================================================ TYPE ============================================================ */
+.display{font-family:var(--display);font-weight:700;font-stretch:125%;font-size:var(--fs-display);line-height:1.02;letter-spacing:-0.015em;max-width:18ch;}
+.display .hl{color:var(--accent);}
+.lede{font-family:var(--sans);font-size:var(--fs-lede);line-height:1.45;font-weight:400;color:var(--on-dark-dim);max-width:56ch;margin-top:1.4rem;}
+.s-light .lede{color:var(--ink-600);}
+.s-dark .lede strong,.s-darker .lede strong{color:var(--on-dark);font-weight:600;}
+.s-light .lede strong{color:var(--ink-900);font-weight:600;}
+
+/* ============================================================ SCREENSHOT FRAME + SLOT ============================================================ */
+.frame{background:var(--paper-panel);border:1px solid var(--ink-line);border-radius:10px;overflow:hidden;box-shadow:0 24px 60px -28px rgba(0,0,0,.55);}
+.frame__bar{display:flex;align-items:center;gap:.45rem;padding:.7rem .9rem;border-bottom:1px solid var(--ink-line);background:#F7F8F9;}
+.frame__bar i{width:9px;height:9px;border-radius:50%;background:#D4D7DB;}
+.frame__cap{margin-left:.6rem;font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-600);}
+.frame__body{position:relative;}
+/* swap .slot for: <img class="shot" src="screenshot-N.png" alt=""> */
+.slot{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;background:repeating-linear-gradient(135deg,#F4F5F6 0 14px,#EFF1F2 14px 28px);color:#9AA0A6;font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;text-align:center;padding:1.5rem;}
+.shot{display:block;width:100%;height:auto;}
+
+/* ============================================================ GRIDS ============================================================ */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-top:2.4rem;}
+.split{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(1.6rem,4vw,3.4rem);align-items:center;margin-top:2.4rem;}
+.split--wide{grid-template-columns:1fr 1.2fr;}
+
+/* ============================================================ STATES ============================================================ */
+.states{display:grid;grid-template-columns:1fr auto 1fr;gap:clamp(1rem,3vw,2rem);align-items:stretch;margin-top:2.6rem;}
+.state-card{border-radius:12px;padding:clamp(1.4rem,2.6vw,2rem);border:1px solid var(--ink-line);background:var(--paper-panel);}
+.state-card--future{border:1px solid var(--accent);box-shadow:0 0 0 4px var(--accent-soft);}
+.state-head{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-600);margin-bottom:1.2rem;}
+.state-card--future .state-head{color:var(--accent);}
+.state-list{list-style:none;display:flex;flex-direction:column;gap:1rem;}
+.state-list li{display:flex;gap:.7rem;align-items:flex-start;font-size:1.02rem;line-height:1.4;color:var(--ink-900);}
+.state-list li::before{content:"";flex:none;width:7px;height:7px;border-radius:2px;margin-top:.5rem;background:#C7CCD1;}
+.state-card--future .state-list li::before{background:var(--accent);}
+.state-arrow{display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:1.6rem;}
+
+/* ============================================================ WIN CARDS ============================================================ */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1.2rem,3vw,2.2rem);margin-top:2.8rem;}
+.step{border-top:2px solid var(--accent);padding-top:1.2rem;}
+.step-n{font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;color:var(--accent);text-transform:uppercase;}
+.step h3{font-family:var(--display);font-stretch:125%;font-weight:600;font-size:clamp(1.25rem,2.2vw,1.7rem);line-height:1.1;margin:.7rem 0 .6rem;}
+.step p{font-size:.98rem;line-height:1.45;color:var(--on-dark-dim);}
+.s-light .step p{color:var(--ink-600);}
+
+/* ============================================================ CALLOUT + ASIDE ============================================================ */
+.callout{margin-top:1.8rem;border-left:2px solid var(--accent);padding:.3rem 0 .3rem 1.1rem;font-size:1.05rem;line-height:1.5;max-width:60ch;}
+.aside{margin-top:1.6rem;font-size:.92rem;line-height:1.5;color:var(--on-dark-dim);max-width:58ch;}
+.s-light .aside{color:var(--ink-600);}
+
+/* ============================================================ PEER LOGOS ============================================================ */
+.logos{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2.6rem;}
+.logo-card{border:1px solid var(--steel-line);border-radius:10px;padding:2rem 1.4rem;text-align:center;background:var(--steel-800);}
+.logo-slot{height:64px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;color:var(--on-dark-dim);border:1px dashed var(--steel-line);border-radius:6px;margin-bottom:1rem;text-transform:uppercase;padding:.5rem;}
+.logo-card b{font-family:var(--display);font-stretch:125%;font-weight:700;font-size:1.3rem;display:block;}
+.logo-card span{font-size:.82rem;color:var(--on-dark-dim);display:block;margin-top:.3rem;}
+
+/* ============================================================ PRICING ============================================================ */
+.price-card{margin-top:2.4rem;border:1px solid var(--steel-line);border-radius:14px;background:linear-gradient(180deg,var(--steel-800),var(--steel-900));padding:clamp(1.6rem,3vw,2.6rem);max-width:760px;}
+.line{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:1.05rem 0;border-bottom:1px solid var(--steel-line);}
+.line:last-of-type{border-bottom:none;}
+.line .name{font-size:1.02rem;}
+.line .name small{display:block;color:var(--accent);font-size:.8rem;margin-top:.2rem;}
+.line .amt{font-family:var(--mono);font-size:1.02rem;color:var(--on-dark);white-space:nowrap;}
+.line .amt.muted{color:var(--on-dark-dim);}
+.total{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-top:1.4rem;padding-top:1.6rem;border-top:2px solid var(--accent);}
+.total .lbl{font-family:var(--mono);font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--on-dark-dim);}
+.total .big{font-family:var(--display);font-stretch:125%;font-weight:700;font-size:clamp(1.8rem,3.4vw,2.6rem);color:var(--accent);}
+.tag{display:inline-block;font-family:var(--mono);font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:.35rem .65rem;border-radius:4px;margin-bottom:1.2rem;}
+
+/* ============================================================ BENCHMARK STATS + CTA ============================================================ */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1.2rem,3vw,2.4rem);margin-top:2.8rem;}
+.stat{border-top:2px solid var(--accent);padding-top:1.1rem;}
+.stat-num{font-family:var(--display);font-stretch:125%;font-weight:800;font-size:clamp(2.4rem,5vw,3.6rem);line-height:1;color:var(--accent);}
+.stat-lbl{font-size:1rem;color:var(--on-dark-dim);margin-top:.5rem;}
+.roi-cta{margin-top:2.8rem;}
+.cta-btn{display:inline-block;font-family:var(--sans);font-weight:600;font-size:1.05rem;color:#fff;background:var(--accent);padding:.95rem 1.6rem;border-radius:8px;text-decoration:none;transition:transform .15s ease;box-shadow:0 10px 30px -10px rgba(255,92,53,.6);}
+.cta-btn:hover{transform:translateY(-2px);}
+.cta-btn:focus-visible{outline:3px solid var(--accent-soft);outline-offset:2px;}
+.roi-note{margin-top:1.2rem;font-size:.8rem;line-height:1.5;color:var(--on-dark-dim);max-width:66ch;}
+
+/* ============================================================ DOTS + REVEAL ============================================================ */
+.dots{position:fixed;right:clamp(.8rem,2vw,1.6rem);top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column;gap:.7rem;}
+.dots button{width:9px;height:9px;border-radius:50%;border:none;cursor:pointer;padding:0;background:rgba(255,255,255,.28);transition:all .25s ease;}
+.dots button.on{background:var(--accent);transform:scale(1.35);}
+.dots.invert button{background:rgba(20,24,28,.25);}
+.dots.invert button.on{background:var(--accent);}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.in{opacity:1;transform:none;}
+.reveal.d1{transition-delay:.08s;} .reveal.d2{transition-delay:.16s;} .reveal.d3{transition-delay:.24s;}
+
+/* ============================================================ RESPONSIVE ============================================================ */
+@media(max-width:860px){
+  .split,.split--wide{grid-template-columns:1fr;}
+  .grid-2{grid-template-columns:1fr;}
+  .logos{grid-template-columns:1fr;}
+  .metrics{grid-template-columns:1fr 1fr;}
+  .stats{grid-template-columns:1fr;}
+  .states{grid-template-columns:1fr;}
+  .state-arrow{transform:rotate(90deg);padding:.3rem 0;}
+  .steps{grid-template-columns:1fr;}
+  .dots{display:none;}
+  .display{max-width:100%;}
+}
+@media(prefers-reduced-motion:reduce){
+  *{scroll-behavior:auto!important;}
+  .reveal{opacity:1;transform:none;transition:none;}
+}
 </style>
 </head>
 <body>
-<main>
-  <h1>Name Registry</h1>
-  <form id="form">
-    <input id="name" placeholder="Type a name…" autocomplete="off" required>
-    <button type="submit">Save</button>
-  </form>
-  <div class="status" id="status">Loading…</div>
-  <ul id="list"></ul>
+
+<nav class="dots" id="dots" aria-label="Section navigation"></nav>
+
+<main class="scroll" id="scroll">
+
+  <!-- ============ 01 · OPENER (the shift) ============ -->
+  <section class="section s-dark" data-label="Open">
+    <div class="section__inner">
+      <div class="eyebrow-row reveal">
+        <span class="plate"><span class="tick"></span>Executive Briefing · 2026</span>
+        <span class="index">Waukesha-Pearce Industries <b>×</b> HubSpot</span>
+      </div>
+      <h1 class="display reveal d1">See which marketing <span class="hl">actually makes money.</span></h1>
+      <p class="lede reveal d2">Your team has built real brand awareness. The next step is simple. <strong>Measure marketing in revenue, not just activity</strong>, and do more with the budget you already have.</p>
+    </div>
+  </section>
+
+  <!-- ============ 02 · TODAY vs NEXT ============ -->
+  <section class="section s-light" data-label="Today vs Next">
+    <div class="section__inner">
+      <div class="eyebrow-row reveal">
+        <span class="plate"><span class="tick"></span>Where You Are · Where You're Going</span>
+        <span class="index"><b>02</b> / 10</span>
+      </div>
+      <h2 class="display reveal d1">Today, and where this goes next.</h2>
+      <div class="states reveal d2">
+        <div class="state-card state-card--today">
+          <div class="state-head">Today at Waukesha-Pearce</div>
+          <ul class="state-list">
+            <li>Brand awareness is growing across digital channels.</li>
+            <li>Marketing data lives across several separate tools.</li>
+            <li>You can see the activity. The revenue behind it is harder to see.</li>
+          </ul>
+        </div>
+        <div class="state-arrow" aria-hidden="true">&rarr;</div>
+        <div class="state-card state-card--future">
+          <div class="state-head">With HubSpot in place</div>
+          <ul class="state-list">
+            <li>All of it in one connected system.</li>
+            <li>Every channel measured by the revenue it produces.</li>
+            <li>That same awareness growth, now with a dollar figure attached.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 03 · THE BIG IDEA (one shift, three wins) ============ -->
+  <section class="section s-dark" data-label="The idea">
+    <div class="section__inner">
+      <div class="eyebrow-row reveal">
+        <span class="plate"><span class="tick"></span>The Big Idea</span>
+        <span class="index"><b>03</b> / 10</span>
+      </div>
+      <h2 class="display reveal d1">One change. <span class="hl">Three ways you win.</span></h2>
+      <p class="lede reveal d2">First, you see exactly what your marketing produces. Then you do more with what you already have, <strong>without growing the team.</strong></p>
+      <div class="steps reveal d3">
+        <div class="step">
+          <div class="step-n">Win One</div>
+          <h3>Spend smarter</h3>
+          <p>Put budget behind the channels that drive revenue. Cut the ones that don't.</p>
+        </div>
+        <div class="step">
+          <div class="step-n">Win Two</div>
+          <h3>Close faster</h3>
+          <p>Hand hot leads to sales the moment they show interest, so deals don't go cold.</p>
+        </div>
+        <div class="step">
+          <div class="step-n">Win Three</div>
+          <h3>Reach further</h3>
+          <p>Add new marketing channels when you are ready to grow.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04 · FOUNDATION · REVENUE ATTRIBUTION (hero) ============ -->
+  <section class="section s-light" data-label="What it makes">
+    <div class="section__inner">
+      <div class="eyebrow-row reveal">
+        <span class="plate"><span class="tick"></span>The Foundation · Revenue Attribution</span>
+        <span class="index"><b>04</b> / 10 · Highest impact</span>
+      </div>
+      <h2 class="display reveal d1">See exactly what your marketing makes.</h2>
+      <p class="lede reveal d2">Connect real closed deals back to the campaigns and channels that produced them. <strong>For the first time, marketing has a dollar figure.</strong></p>
+      <div class="grid-2 reveal d3">
+        <div class="frame">
+          <div class="frame__bar"><i></i><i></i><i></i><span class="frame__cap">Revenue by campaign &amp; channel</span></div>
+          <div class="frame__body">
+            <!-- SWAP: <img class="shot" src="screenshot-1.png" alt="Revenue by campaign and channel"> -->
+            <div class="slot">[ SCREENSHOT 1 ]<br>Revenue by campaign &amp; channel</div>
+          </div>
+        </div>
+        <div class="frame">
+          <div class="frame__bar"><i></i><i></i><i></i><span class="frame__cap">Closed deals · marketing influence</span></div>
+          <div class="frame__body">
+            <!-- SWAP: <img class="shot" src="screenshot-2.png" alt="Closed deals with marketing interaction breakdown"> -->
+            <div class="slot">[ SCREENSHOT 2 ]<br>Closed deals + marketing influence</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 05 · WIN ONE · SPEND SMARTER ============ -->
+  <section class="section s-dark" data-label="Spend smarter">
+    <div class="section__inner">
+      <div class="eyebrow-row reveal">
+        <span class="plate"><span class="tick"></span>Win One · Spend Smarter</span>
+        <span class="index"><b>05</b> / 10</span>
+      </div>
+      <div class="split reveal d1">
+        <div>
+          <h2 class="display">Put every dollar <span class="hl">where it works.</span></h2>
+          <p class="lede">See which channels bring in leads and revenue, so you move budget toward what is working and stop paying for what isn't.</p>
+          <p class="callout">Even print ads and trade show booths get a QR code, so your offline marketing finally shows up in the same view. Now you can see which ones are worth keeping.</p>
+        </div>
+        <div class="frame">
+          <div class="frame__bar"><i></i><i></i><i></i><span class="frame__cap">Leads &amp; traffic by channel</span></div>
+          <div class="frame__body">
+            <!-- SWAP: <img class="shot" src="screenshot-3.png" alt="Leads and traffic by channel"> -->
+            <div class="slot">[ SCREENSHOT 3 ]<br>Leads &amp; traffic, by channel</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 06 · WIN TWO · CLOSE FASTER ============ -->
+  <section class="section s-light" data-label="Close faster">
+    <div class="section__inner">
+      <div class="eyebrow-row reveal">
+        <span class="plate"><span class="tick"></span>Win Two · Close Faster</span>
+        <span class="index"><b>06</b> / 10</span>
+      </div>
+      <h2 class="display reveal d1">Reach hot leads while they're still hot.</h2>
+      <p class="lede reveal d2">HubSpot shows you who is interested. The company on your site, the person who opened your email, the visitor back on your pricing page. Then it hands them to sales right away.</p>
+      <div class="grid-2 reveal d3">
+        <div class="frame">
+          <div class="frame__bar"><i></i><i></i><i></i><span class="frame__cap">Company &amp; visitor identification</span></div>
+          <div class="frame__body">
+            <!-- SWAP: <img class="shot" src="screenshot-4.png" alt="Visitor and company identification"> -->
+            <div class="slot">[ SCREENSHOT 4 ]<br>See which companies are on your site</div>
+          </div>
+        </div>
+        <div class="frame">
+          <div class="frame__bar"><i></i><i></i><i></i><span class="frame__cap">Automated lead handoff</span></div>
+          <div class="frame__body">
+            <!-- SWAP: <img class="shot" src="screenshot-5.png" alt="Automated lead handoff to sales"> -->
+            <div class="slot">[ SCREENSHOT 5 ]<br>Hot leads routed to sales automatically</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 07 · WIN THREE · REACH FURTHER ============ -->
+  <section class="section s-darker" data-label="Reach further">
+    <div class="section__inner">
+      <div class="eyebrow-row reveal">
+        <span class="plate"><span class="tick"></span>Win Three · Reach Further</span>
+        <span class="index"><b>07</b> / 10</span>
+      </div>
+      <div class="split split--wide reveal d1">
+        <div>
+          <h2 class="display">Grow into new channels <span class="hl">when you're ready.</span></h2>
+          <p class="lede">Show up where buyers search now, including AI search, and create content faster than before. The reach grows without growing the team.</p>
+          <p class="aside">The same engine can support parts and service down the road, whenever you decide to turn it on.</p>
+        </div>
+        <div class="frame">
+          <div class="frame__bar"><i></i><i></i><i></i><span class="frame__cap">AI search visibility</span></div>
+          <div class="frame__body">
+            <!-- SWAP: <img class="shot" src="screenshot-6.png" alt="AI search visibility ranking"> -->
+            <div class="slot">[ SCREENSHOT 6 ]<br>See how often you show up in AI search</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 08 · PEER PROOF ============ -->
+  <section class="section s-dark" data-label="Peers">
+    <div class="section__inner">
+      <div class="eyebrow-row reveal">
+        <span class="plate"><span class="tick"></span>Already On HubSpot</span>
+        <span class="index"><b>08</b> / 10</span>
+      </div>
+      <h2 class="display reveal d1">You'd be in good company.</h2>
+      <p class="lede reveal d2">Equipment dealers across North America already run on HubSpot.</p>
+      <!-- NOTE: confirm exact legal names + grab real logos from each dealer site before the meeting -->
+      <div class="logos reveal d3">
+        <div class="logo-card"><div class="logo-slot">[ LOGO: RMS ]</div><b>RMS</b><span>Road Machinery &amp; Supplies Co.</span></div>
+        <div class="logo-card"><div class="logo-slot">[ LOGO: SMS ]</div><b>SMS Equipment</b><span>Canada</span></div>
+        <div class="logo-card"><div class="logo-slot">[ LOGO: TEC ]</div><b>TEC</b><span>Tractor &amp; Equipment Company</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 09 · PRICING ============ -->
+  <section class="section s-darker" data-label="Investment">
+    <div class="section__inner">
+      <div class="eyebrow-row reveal">
+        <span class="plate"><span class="tick"></span>Investment · Billed Annually</span>
+        <span class="index"><b>09</b> / 10</span>
+      </div>
+      <h2 class="display reveal d1">One annual number, by line item.</h2>
+      <p class="lede reveal d2">Includes 10,000 marketing contacts. Setup and integration are scoped separately.</p>
+      <div class="price-card reveal d3">
+        <span class="tag">Marketing Hub Enterprise · Deal &amp; Revenue Attribution</span>
+        <div class="line"><span class="name">HubSpot Marketing Hub Enterprise<small>25% off</small></span><span class="amt">~$32,400 to $36,000</span></div>
+        <div class="line"><span class="name">HubSpot SMS shortcode<small>25% off · optional</small></span><span class="amt">~$13,500</span></div>
+        <div class="line"><span class="name">Third-party setup &amp; integration</span><span class="amt muted">scoped separately</span></div>
+        <div class="total"><span class="lbl">Annual total</span><span class="big">~$45,900 to $49,500</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 10 · RETURN (real benchmarks + official calculator) ============ -->
+  <section class="section s-dark" data-label="Return">
+    <div class="section__inner">
+      <div class="eyebrow-row reveal">
+        <span class="plate"><span class="tick"></span>Return On Investment</span>
+        <span class="index"><b>10</b> / 10</span>
+      </div>
+      <h2 class="display reveal d1">The lift, from <span class="hl">278,000 customers.</span></h2>
+      <p class="lede reveal d2">After one year, HubSpot marketing customers typically see real, measurable gains. Here is the average. Then we run Waukesha-Pearce's own numbers, live.</p>
+      <div class="stats reveal d3">
+        <div class="stat"><div class="stat-num" data-to="237">+237%</div><div class="stat-lbl">More marketing leads</div></div>
+        <div class="stat"><div class="stat-num" data-to="175">+175%</div><div class="stat-lbl">More website visitors</div></div>
+        <div class="stat"><div class="stat-num" data-to="91">+91%</div><div class="stat-lbl">More deals created</div></div>
+      </div>
+      <div class="roi-cta reveal d3">
+        <a class="cta-btn" href="https://www.hubspot.com/roi-calculator/marketing" target="_blank" rel="noopener">Run Waukesha-Pearce's numbers &rarr;</a>
+        <p class="roi-note">Construction is a built-in industry setting, so the estimate is tailored to your sector. Based on aggregated data from 278,000+ HubSpot customers, comparing early to later usage in the first year. Individual results vary.</p>
+      </div>
+    </div>
+  </section>
+
 </main>
-<script type="module">
-  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
-  const SUPABASE_URL = 'https://spdxrmzwhacmbqctovdd.supabase.co'
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNwZHhybXp3aGFjbWJxY3RvdmRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2OTEwNDIsImV4cCI6MjA5NTI2NzA0Mn0.9kFNaPSXPtL1HhUagAYxtPj9W7nlfoVNfVmGMR3YeaA'
-
-  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-  const form = document.getElementById('form')
-  const input = document.getElementById('name')
-  const list = document.getElementById('list')
-  const status = document.getElementById('status')
-
-  function setStatus(text, isError = false) {
-    status.textContent = text
-    status.classList.toggle('error', isError)
+<script>
+const scroller=document.getElementById('scroll');
+const sections=[...document.querySelectorAll('.section')];
+const dotsWrap=document.getElementById('dots');
+sections.forEach((s,i)=>{
+  const b=document.createElement('button');
+  b.setAttribute('aria-label','Go to '+(s.dataset.label||('section '+(i+1))));
+  b.addEventListener('click',()=>s.scrollIntoView({behavior:'smooth'}));
+  dotsWrap.appendChild(b);
+});
+const dotEls=[...dotsWrap.children];
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+function animateStat(el){
+  const to=+el.dataset.to;
+  if(reduce){el.textContent='+'+to+'%';return;}
+  const start=performance.now(),dur=900;
+  function tick(t){
+    const p=Math.min((t-start)/dur,1);const e=1-Math.pow(1-p,3);
+    el.textContent='+'+Math.round(to*e)+'%';
+    if(p<1)requestAnimationFrame(tick);
   }
-
-  function render(rows) {
-    list.innerHTML = ''
-    for (const row of rows) {
-      const li = document.createElement('li')
-      li.textContent = row.name
-      list.appendChild(li)
+  requestAnimationFrame(tick);
+}
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.reveal').forEach(r=>r.classList.add('in'));
+      const i=sections.indexOf(e.target);
+      dotEls.forEach((d,di)=>d.classList.toggle('on',di===i));
+      dotsWrap.classList.toggle('invert',e.target.classList.contains('s-light'));
+      e.target.querySelectorAll('.stat-num:not([data-done])').forEach(s=>{s.dataset.done='1';animateStat(s);});
     }
-  }
-
-  async function load() {
-    setStatus('Loading…')
-    const { data, error } = await supabase
-      .from('names')
-      .select('name, created_at')
-      .order('created_at', { ascending: false })
-    if (error) {
-      setStatus(`Error: ${error.message}`, true)
-      return
-    }
-    setStatus(`${data.length} name${data.length === 1 ? '' : 's'} saved`)
-    render(data)
-  }
-
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault()
-    const name = input.value.trim()
-    if (!name) return
-    const button = form.querySelector('button')
-    button.disabled = true
-    const { error } = await supabase.from('names').insert({ name })
-    button.disabled = false
-    if (error) {
-      setStatus(`Error: ${error.message}`, true)
-      return
-    }
-    input.value = ''
-    await load()
-  })
-
-  load()
+  });
+},{threshold:.55});
+sections.forEach(s=>io.observe(s));
 </script>
 </body>
 </html>
