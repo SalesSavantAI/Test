@@ -112,6 +112,8 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
 .logos{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2.6rem;}
 .logo-card{border:1px solid var(--steel-line);border-radius:10px;padding:2rem 1.4rem;text-align:center;background:var(--steel-800);}
 .logo-slot{height:64px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;color:var(--on-dark-dim);border:1px dashed var(--steel-line);border-radius:6px;margin-bottom:1rem;text-transform:uppercase;padding:.5rem;}
+.logo-slot--img{border:1px solid var(--steel-line);border-style:solid;background:#fff;padding:.9rem 1rem;}
+.logo-slot--img img{max-height:100%;max-width:100%;object-fit:contain;display:block;}
 .logo-card b{font-family:var(--display);font-stretch:125%;font-weight:700;font-size:1.3rem;display:block;}
 .logo-card span{font-size:.82rem;color:var(--on-dark-dim);display:block;margin-top:.3rem;}
 
@@ -461,7 +463,7 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
       <!-- NOTE: confirm exact legal names + grab real logos from each dealer site before the meeting -->
       <div class="logos reveal d3">
         <div class="logo-card"><div class="logo-slot">[ LOGO: RMS ]</div><b>RMS</b><span>Road Machinery &amp; Supplies Co.</span></div>
-        <div class="logo-card"><div class="logo-slot">[ LOGO: SMS ]</div><b>SMS Equipment</b><span>Canada</span></div>
+        <div class="logo-card"><div class="logo-slot logo-slot--img"><img src="logo-sms.svg" alt="SMS Equipment logo"></div><b>SMS Equipment</b><span>Canada</span></div>
         <div class="logo-card"><div class="logo-slot">[ LOGO: TEC ]</div><b>TEC</b><span>Tractor &amp; Equipment Company</span></div>
       </div>
     </div>
