@@ -39,6 +39,16 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
   background-image:linear-gradient(rgba(255,255,255,0.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.022) 1px,transparent 1px);
   background-size:58px 58px;mask-image:radial-gradient(ellipse 90% 80% at 50% 40%,#000 35%,transparent 100%);}
 
+/* ============================================================ HERO (full-bleed cinematic) ============================================================ */
+.s-hero{background:var(--steel-900);color:var(--on-dark);}
+.hero-bg{position:absolute;inset:0;z-index:0;background-image:url('hero.jpg');background-size:cover;background-position:center 42%;}
+.hero-bg::after{content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(90deg,rgba(15,18,21,.95) 0%,rgba(15,18,21,.80) 36%,rgba(15,18,21,.34) 68%,rgba(15,18,21,.12) 100%),
+    linear-gradient(0deg,rgba(15,18,21,.88) 0%,rgba(15,18,21,.20) 42%,rgba(15,18,21,.42) 100%);}
+.s-hero .display,.s-hero .lede{text-shadow:0 2px 22px rgba(0,0,0,.5);}
+.s-hero .display{max-width:21ch;}
+
 /* ============================================================ SPEC PLATE / EYEBROW ============================================================ */
 .plate{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.7rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;padding:.5rem .8rem;border:1px solid var(--steel-line);border-radius:3px;color:var(--on-dark-dim);}
 .s-light .plate{border-color:var(--ink-line);color:var(--ink-600);}
@@ -164,7 +174,8 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
 <main class="scroll" id="scroll">
 
   <!-- ============ 01 · OPENER (the shift) ============ -->
-  <section class="section s-dark" data-label="Open">
+  <section class="section s-hero" data-label="Open">
+    <div class="hero-bg" aria-hidden="true"></div>
     <div class="section__inner">
       <div class="eyebrow-row reveal">
         <span class="plate"><span class="tick"></span>Executive Briefing · 2026</span>
@@ -247,15 +258,13 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
         <div class="frame">
           <div class="frame__bar"><i></i><i></i><i></i><span class="frame__cap">Revenue by campaign &amp; channel</span></div>
           <div class="frame__body">
-            <!-- SWAP: <img class="shot" src="screenshot-1.png" alt="Revenue by campaign and channel"> -->
-            <div class="slot">[ SCREENSHOT 1 ]<br>Revenue by campaign &amp; channel</div>
+            <img class="shot" src="screenshot-1.jpg" alt="Revenue by campaign, channel, and content type">
           </div>
         </div>
         <div class="frame">
           <div class="frame__bar"><i></i><i></i><i></i><span class="frame__cap">Closed deals · marketing influence</span></div>
           <div class="frame__body">
-            <!-- SWAP: <img class="shot" src="screenshot-2.png" alt="Closed deals with marketing interaction breakdown"> -->
-            <div class="slot">[ SCREENSHOT 2 ]<br>Closed deals + marketing influence</div>
+            <img class="shot" src="screenshot-2.jpg" alt="Customer journey and closed deals by revenue with marketing interaction breakdown">
           </div>
         </div>
       </div>
@@ -278,8 +287,7 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
         <div class="frame">
           <div class="frame__bar"><i></i><i></i><i></i><span class="frame__cap">Leads &amp; traffic by channel</span></div>
           <div class="frame__body">
-            <!-- SWAP: <img class="shot" src="screenshot-3.png" alt="Leads and traffic by channel"> -->
-            <div class="slot">[ SCREENSHOT 3 ]<br>Leads &amp; traffic, by channel</div>
+            <img class="shot" src="screenshot-3.jpg" alt="Web visitors and new contacts by channel">
           </div>
         </div>
       </div>
@@ -299,8 +307,7 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
         <div class="frame">
           <div class="frame__bar"><i></i><i></i><i></i><span class="frame__cap">Company &amp; visitor identification</span></div>
           <div class="frame__body">
-            <!-- SWAP: <img class="shot" src="screenshot-4.png" alt="Visitor and company identification"> -->
-            <div class="slot">[ SCREENSHOT 4 ]<br>See which companies are on your site</div>
+            <img class="shot" src="screenshot-4.jpg" alt="Activity feed showing companies and people engaging on your site">
           </div>
         </div>
         <div class="frame">
