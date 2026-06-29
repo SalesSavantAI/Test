@@ -204,15 +204,15 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
 .channel p{font-size:.86rem;line-height:1.4;color:var(--on-dark-dim);}
 @media(prefers-reduced-motion:no-preference){
   .channels--six .channel{opacity:0;}
-  .reveal.in .channels--six .channel{animation:fadeIn .5s ease forwards;}
-  .reveal.in .channels--six .channel:nth-child(1){animation-delay:.06s;}
-  .reveal.in .channels--six .channel:nth-child(2){animation-delay:.14s;}
-  .reveal.in .channels--six .channel:nth-child(3){animation-delay:.22s;}
-  .reveal.in .channels--six .channel:nth-child(4){animation-delay:.30s;}
-  .reveal.in .channels--six .channel:nth-child(5){animation-delay:.38s;}
-  .reveal.in .channels--six .channel:nth-child(6){animation-delay:.46s;}
+  .reveal.in .channels--six .channel{animation:channelIn .42s ease forwards;}
+  .reveal.in .channels--six .channel:nth-child(1){animation-delay:.05s;}
+  .reveal.in .channels--six .channel:nth-child(2){animation-delay:.11s;}
+  .reveal.in .channels--six .channel:nth-child(3){animation-delay:.17s;}
+  .reveal.in .channels--six .channel:nth-child(4){animation-delay:.23s;}
+  .reveal.in .channels--six .channel:nth-child(5){animation-delay:.29s;}
+  .reveal.in .channels--six .channel:nth-child(6){animation-delay:.35s;}
 }
-@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@keyframes channelIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
 
 /* ============================================================ LIGHTBOX ============================================================ */
 .frame--zoom .frame__body{cursor:zoom-in;}
@@ -375,7 +375,7 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
       <div class="split reveal d1">
         <div>
           <h2 class="display">Put every dollar <span class="hl">where it works.</span></h2>
-          <p class="lede">See which channels bring in leads and revenue, so you move budget toward what is working and stop paying for what isn't.</p>
+          <p class="lede">See which channels bring in leads and revenue, then move budget to what works and stop paying for what doesn't. <strong>You get more from the same spend.</strong></p>
           <p class="callout">Even print ads and trade show booths get a QR code, so your offline marketing finally shows up in the same view. Now you can see which ones are worth keeping.</p>
         </div>
         <div class="frame">
@@ -385,7 +385,6 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
           </div>
         </div>
       </div>
-      <p class="outcome reveal"><b>Why it matters:</b> you stop paying for marketing that doesn't sell, and put that money where it does.</p>
     </div>
   </section>
 
@@ -397,7 +396,7 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
         <span class="index"><b>06</b> / 10</span>
       </div>
       <h2 class="display reveal d1">Reach hot leads before they cool off.</h2>
-      <p class="lede reveal d2">HubSpot shows you who is interested. The company on your site, the person who opened your email, the visitor back on your pricing page. Then it hands them to sales right away.</p>
+      <p class="lede reveal d2">The faster sales reaches a hot lead, the more likely it closes. HubSpot spots who's interested, the company on your site, the person who opened your email, the visitor on your pricing page, and routes them to sales instantly. <strong>You win more of the leads you already generate, with no new spend.</strong></p>
       <div class="grid-2 reveal d3">
         <div class="frame">
           <div class="frame__bar"><i></i><i></i><i></i><span class="frame__cap">Company &amp; visitor identification</span></div>
@@ -422,7 +421,6 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
           <p class="flow__foot">An example of a rule we can set up, not a feature already built.</p>
         </div>
       </div>
-      <p class="outcome reveal"><b>Why it matters:</b> the faster sales reaches a hot lead, the more likely it closes. You win more of the leads you already generate, with no new spend.</p>
     </div>
   </section>
 
@@ -434,7 +432,7 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
         <span class="index"><b>07</b> / 10</span>
       </div>
       <h2 class="display display--wide reveal d1">Grow into <span class="hl">new channels.</span></h2>
-      <p class="lede reveal d2">Open new channels when you're ready. Each one brings more buyers in, and because every one is measured, you put money behind the winners and cut the rest. That's how you scale.</p>
+      <p class="lede reveal d2">Open new channels when you're ready. Each one brings more buyers in, and because every one is measured from day one, you keep only the ones that bring in deals. <strong>More reach, more revenue.</strong></p>
       <div class="channels-block reveal d3">
         <span class="channels-label">Channels you can add</span>
         <div class="channels channels--six">
@@ -445,7 +443,6 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
           <div class="channel"><span class="channel__lbl">Video</span><p>Show the machines at work in minutes.</p></div>
           <div class="channel"><span class="channel__lbl">Email</span><p>Reach your whole list in one send.</p></div>
         </div>
-        <p class="outcome">Every new channel is measured from day one, so you only keep the ones that bring in deals. More reach, more revenue.</p>
         <p class="aside">The same engine can support parts and service down the road, whenever you decide to turn it on.</p>
       </div>
     </div>
