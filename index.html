@@ -62,6 +62,7 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
 /* ============================================================ TYPE ============================================================ */
 .display{font-family:var(--display);font-weight:700;font-stretch:125%;font-size:var(--fs-display);line-height:1.02;letter-spacing:-0.015em;max-width:18ch;}
 .display .hl{color:var(--accent);}
+.display--wide{max-width:none;}
 .lede{font-family:var(--sans);font-size:var(--fs-lede);line-height:1.45;font-weight:400;color:var(--on-dark-dim);max-width:56ch;margin-top:1.4rem;}
 .s-light .lede{color:var(--ink-600);}
 .s-dark .lede strong,.s-darker .lede strong{color:var(--on-dark);font-weight:600;}
@@ -157,22 +158,59 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
 }
 
 /* ============================================================ FLOW DIAGRAM (designed, not a screenshot) ============================================================ */
-.flowcard{background:var(--steel-900);border:1px solid var(--steel-line);border-radius:10px;padding:clamp(1.3rem,2.4vw,1.9rem);box-shadow:0 24px 60px -28px rgba(0,0,0,.55);display:flex;flex-direction:column;gap:1.2rem;}
+.flowcard{background:var(--steel-900);border:1px solid var(--steel-line);border-radius:10px;padding:clamp(1.7rem,3vw,2.4rem);box-shadow:0 24px 60px -28px rgba(0,0,0,.55);display:flex;flex-direction:column;gap:1.6rem;}
 .flowcard__cap{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--on-dark-dim);}
-.flow{display:flex;align-items:center;gap:clamp(.5rem,1.4vw,.9rem);}
-.flow__triggers{display:flex;flex-direction:column;gap:.5rem;flex:1 1 0;min-width:0;}
-.trigger{font-family:var(--mono);font-size:.7rem;letter-spacing:.05em;color:var(--on-dark-dim);border:1px solid var(--steel-line);border-radius:5px;padding:.5rem .65rem;background:var(--steel-800);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.flow__arrow{flex:none;color:var(--accent);font-size:1.25rem;line-height:1;}
-.flow__node{flex:none;border-radius:8px;padding:.85rem .9rem;text-align:center;font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;}
+.flow{display:flex;align-items:center;gap:clamp(.9rem,2.4vw,1.7rem);}
+.flow__triggers{display:flex;flex-direction:column;gap:.6rem;flex:1 1 0;min-width:0;}
+.trigger{font-family:var(--mono);font-size:.7rem;letter-spacing:.05em;line-height:1.35;color:var(--on-dark-dim);border:1px solid var(--steel-line);border-radius:5px;padding:.55rem .72rem;background:var(--steel-800);white-space:normal;}
+.flow__arrow{flex:none;position:relative;color:var(--accent);font-size:1.35rem;line-height:1;}
+.flow__node{flex:none;border-radius:8px;padding:1rem 1.05rem;text-align:center;font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;}
 .node--warm{border:1px solid var(--accent);color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 4px var(--accent-soft);}
-.node--sent{border:1px solid var(--steel-line);color:var(--on-dark);background:var(--steel-800);max-width:9rem;white-space:normal;line-height:1.3;}
+.node--sent{border:1px solid var(--steel-line);color:var(--on-dark);background:var(--steel-800);max-width:9.5rem;white-space:normal;line-height:1.3;}
 .flow__foot{font-family:var(--sans);font-size:.8rem;color:var(--on-dark-dim);}
+
+/* ---- section 06 circuit sequence (fires once, motion only) ---- */
+@media(prefers-reduced-motion:no-preference){
+  .circuit-armed .trigger{opacity:0;transform:translateX(-10px);transition:opacity .3s ease,transform .3s ease;}
+  .circuit-run .trigger{opacity:1;transform:none;}
+  .circuit-run .flow__triggers .trigger:nth-child(1){transition-delay:.04s;}
+  .circuit-run .flow__triggers .trigger:nth-child(2){transition-delay:.12s;}
+  .circuit-run .flow__triggers .trigger:nth-child(3){transition-delay:.20s;}
+  .circuit-run .flow__triggers .trigger:nth-child(4){transition-delay:.28s;}
+  .flow__arrow::after{content:"";position:absolute;top:50%;left:0;width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px 2px rgba(255,92,53,.7);opacity:0;transform:translate(-50%,-50%);}
+  .circuit-run .flow__arrow--a::after{animation:arrowPulse .3s ease .50s 1;}
+  .circuit-run .flow__arrow--b::after{animation:arrowPulse .3s ease .82s 1;}
+  .circuit-run .node--warm{animation:nodeFlare .34s ease .62s 1;}
+  .circuit-run .node--sent{animation:sentFlare .3s ease .95s 1;}
+}
+@keyframes arrowPulse{0%{opacity:0;left:0;}25%{opacity:1;}75%{opacity:1;}100%{opacity:0;left:100%;}}
+@keyframes nodeFlare{0%{box-shadow:0 0 0 4px var(--accent-soft);transform:scale(1);}40%{box-shadow:0 0 0 6px rgba(255,92,53,.28),0 0 24px 5px rgba(255,92,53,.5);transform:scale(1.06);}100%{box-shadow:0 0 0 4px var(--accent-soft);transform:scale(1);}}
+@keyframes sentFlare{0%{box-shadow:0 0 0 0 rgba(255,92,53,0);border-color:var(--steel-line);transform:scale(1);}40%{box-shadow:0 0 20px 4px rgba(255,92,53,.45);border-color:var(--accent);transform:scale(1.05);}100%{box-shadow:0 0 0 0 rgba(255,92,53,0);border-color:var(--steel-line);transform:scale(1);}}
+
+/* ---- outcome line (the revenue payoff of each win) ---- */
+.outcome{margin-top:1.9rem;font-family:var(--mono);font-size:.82rem;font-weight:500;letter-spacing:.03em;line-height:1.55;color:var(--accent);max-width:64ch;}
+.outcome b{font-weight:600;}
 
 /* ============================================================ CHANNEL CARDS (designed, not a screenshot) ============================================================ */
 .channels{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;}
-.channel{border:1px solid var(--steel-line);border-radius:8px;padding:clamp(.9rem,1.6vw,1.2rem);background:var(--steel-900);}
+.channels--six{grid-template-columns:repeat(3,1fr);}
+.channels-block{margin-top:2.6rem;}
+.channels-label{display:block;font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--on-dark-dim);margin-bottom:1rem;}
+.channel{border:1px solid var(--steel-line);border-radius:8px;padding:clamp(1rem,1.8vw,1.3rem);background:var(--steel-900);transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease;}
+.channel:hover{border-color:rgba(255,92,53,.55);transform:translateY(-3px);box-shadow:0 14px 34px -20px rgba(0,0,0,.65);}
 .channel__lbl{display:block;font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--on-dark);margin-bottom:.5rem;}
 .channel p{font-size:.86rem;line-height:1.4;color:var(--on-dark-dim);}
+@media(prefers-reduced-motion:no-preference){
+  .channels--six .channel{opacity:0;}
+  .reveal.in .channels--six .channel{animation:fadeIn .5s ease forwards;}
+  .reveal.in .channels--six .channel:nth-child(1){animation-delay:.06s;}
+  .reveal.in .channels--six .channel:nth-child(2){animation-delay:.14s;}
+  .reveal.in .channels--six .channel:nth-child(3){animation-delay:.22s;}
+  .reveal.in .channels--six .channel:nth-child(4){animation-delay:.30s;}
+  .reveal.in .channels--six .channel:nth-child(5){animation-delay:.38s;}
+  .reveal.in .channels--six .channel:nth-child(6){animation-delay:.46s;}
+}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
 
 /* ============================================================ LIGHTBOX ============================================================ */
 .frame--zoom .frame__body{cursor:zoom-in;}
@@ -207,8 +245,12 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
   .flow__arrow{align-self:center;transform:rotate(90deg);}
   .node--sent{max-width:none;}
 }
+@media(max-width:860px){
+  .channels--six{grid-template-columns:repeat(2,1fr);}
+}
 @media(max-width:480px){
   .channels{grid-template-columns:1fr;}
+  .channels--six{grid-template-columns:1fr;}
 }
 @media(prefers-reduced-motion:reduce){
   *{scroll-behavior:auto!important;}
@@ -341,6 +383,7 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
           </div>
         </div>
       </div>
+      <p class="outcome reveal"><b>Why it matters:</b> move spend to what sells, and the same budget compounds into more revenue every quarter.</p>
     </div>
   </section>
 
@@ -362,21 +405,22 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
         </div>
         <div class="flowcard">
           <span class="flowcard__cap">Example: automated lead handoff</span>
-          <div class="flow">
+          <div class="flow" id="flow06">
             <div class="flow__triggers">
               <div class="trigger">Views the pricing page</div>
               <div class="trigger">Opens a key email</div>
-              <div class="trigger">Returns three times</div>
+              <div class="trigger">Returns to your site</div>
               <div class="trigger">Fills out a form</div>
             </div>
-            <div class="flow__arrow" aria-hidden="true">&rarr;</div>
+            <div class="flow__arrow flow__arrow--a" aria-hidden="true">&rarr;</div>
             <div class="flow__node node--warm">Warm lead</div>
-            <div class="flow__arrow" aria-hidden="true">&rarr;</div>
+            <div class="flow__arrow flow__arrow--b" aria-hidden="true">&rarr;</div>
             <div class="flow__node node--sent">Sent to sales instantly</div>
           </div>
           <p class="flow__foot">An example of a rule we can set up, not a feature already built.</p>
         </div>
       </div>
+      <p class="outcome reveal"><b>Why it matters:</b> the faster sales reaches a hot lead, the more likely it closes. You win more of the leads you already generate, with no new spend.</p>
     </div>
   </section>
 
@@ -387,20 +431,20 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
         <span class="plate"><span class="tick"></span>Win Three · Reach Further</span>
         <span class="index"><b>07</b> / 10</span>
       </div>
-      <div class="split split--wide reveal d1">
-        <div>
-          <h2 class="display">Grow into new channels <span class="hl">when you're ready.</span></h2>
-          <p class="lede">Show up where buyers search now, including AI search, and create content faster than before. The reach grows without growing the team.</p>
-          <p class="aside">The same engine can support parts and service down the road, whenever you decide to turn it on.</p>
-        </div>
-        <div class="channels">
-          <div class="channel"><span class="channel__lbl">Blogs</span><p>Answer the questions buyers type into search.</p></div>
-          <div class="channel"><span class="channel__lbl">Podcasts</span><p>Reach buyers who would rather listen than read.</p></div>
-          <div class="channel"><span class="channel__lbl">AI search · AEO</span><p>Show up when buyers ask AI where to buy.</p></div>
+      <h2 class="display display--wide reveal d1">Cast a <span class="hl">wider net.</span></h2>
+      <p class="lede reveal d2">Open new channels when you're ready, and every one feeds the same system. More places to be found means more leads in the funnel. And because it's all measured, you double down on what works. This is how you scale.</p>
+      <div class="channels-block reveal d3">
+        <span class="channels-label">Channels you can add</span>
+        <div class="channels channels--six">
+          <div class="channel"><span class="channel__lbl">Blogs</span><p>Answer what buyers type into search.</p></div>
+          <div class="channel"><span class="channel__lbl">Podcasts</span><p>Reach buyers who'd rather listen.</p></div>
+          <div class="channel"><span class="channel__lbl">AI Search · AEO</span><p>Show up when buyers ask AI where to buy.</p></div>
           <div class="channel"><span class="channel__lbl">Social</span><p>Stay in front of buyers between purchases.</p></div>
           <div class="channel"><span class="channel__lbl">Video</span><p>Show the machines at work in minutes.</p></div>
           <div class="channel"><span class="channel__lbl">Email</span><p>Reach your whole list in one send.</p></div>
         </div>
+        <p class="outcome">Every new channel, measured from day one. More reach, more data, more revenue to reinvest.</p>
+        <p class="aside">The same engine can support parts and service down the road, whenever you decide to turn it on.</p>
       </div>
     </div>
   </section>
@@ -499,6 +543,9 @@ function animateStat(el){
   }
   requestAnimationFrame(tick);
 }
+/* ---- section 06 circuit: arm pills now, run the sequence once on entry ---- */
+const flow06=document.getElementById('flow06');
+if(flow06&&!reduce)flow06.classList.add('circuit-armed');
 let current=0;
 const io=new IntersectionObserver((entries)=>{
   entries.forEach(e=>{
@@ -509,6 +556,7 @@ const io=new IntersectionObserver((entries)=>{
       dotEls.forEach((d,di)=>d.classList.toggle('on',di===i));
       dotsWrap.classList.toggle('invert',e.target.classList.contains('s-light'));
       e.target.querySelectorAll('.stat-num:not([data-done])').forEach(s=>{s.dataset.done='1';animateStat(s);});
+      if(flow06&&!reduce&&!flow06.dataset.ran&&e.target.contains(flow06)){flow06.dataset.ran='1';flow06.classList.add('circuit-run');}
     }
   });
 },{threshold:.55});
