@@ -94,7 +94,11 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
 .state-list li::before{content:"";flex:none;width:7px;height:7px;border-radius:2px;margin-top:.5rem;background:#C7CCD1;}
 .state-card--future .state-list li::before{background:var(--accent);}
 .state-arrow{display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:1.6rem;}
-.win-list li b{color:var(--accent);font-weight:600;}
+.win-list{gap:1.2rem;}
+.win-list li{flex-direction:column;align-items:stretch;gap:.28rem;}
+.win-list li::before{display:none;}
+.win-name{color:var(--accent);font-weight:600;font-size:1.05rem;line-height:1.2;}
+.win-list li span{font-size:.98rem;line-height:1.4;color:var(--ink-900);}
 
 /* ============================================================ WIN CARDS ============================================================ */
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1.2rem,3vw,2.2rem);margin-top:2.8rem;}
@@ -320,9 +324,9 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
         <div class="state-card state-card--future">
           <div class="state-head">With HubSpot in place</div>
           <ul class="state-list win-list">
-            <li><b>Spend smarter:</b> put budget where it drives revenue, cut what doesn't.</li>
-            <li><b>Close faster:</b> reach hot leads while they're still buying, no new spend.</li>
-            <li><b>Reach further:</b> open new channels that bring more buyers into the funnel.</li>
+            <li><b class="win-name">Spend smarter</b><span>Put budget where it drives revenue, cut what doesn't.</span></li>
+            <li><b class="win-name">Close faster</b><span>Reach hot leads while they're still buying, no new spend.</span></li>
+            <li><b class="win-name">Reach further</b><span>Open new channels that bring more buyers into the funnel.</span></li>
           </ul>
         </div>
       </div>
