@@ -231,15 +231,36 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
 .channel p{font-size:.86rem;line-height:1.4;color:var(--on-dark-dim);}
 @media(prefers-reduced-motion:no-preference){
   .channels--six .channel{opacity:0;}
-  .reveal.in .channels--six .channel{animation:channelIn .42s ease forwards;}
-  .reveal.in .channels--six .channel:nth-child(1){animation-delay:.05s;}
-  .reveal.in .channels--six .channel:nth-child(2){animation-delay:.11s;}
-  .reveal.in .channels--six .channel:nth-child(3){animation-delay:.17s;}
-  .reveal.in .channels--six .channel:nth-child(4){animation-delay:.23s;}
-  .reveal.in .channels--six .channel:nth-child(5){animation-delay:.29s;}
-  .reveal.in .channels--six .channel:nth-child(6){animation-delay:.35s;}
+  /* cards fade/rise in; a thin orange brighten travels card-to-card, lighting each new channel once (~1.2s). second delay = the sweep. no fill on the sweep, so hover states stay live at rest. */
+  .reveal.in .channels--six .channel{animation:channelIn .42s ease forwards, channelSweep .42s ease;}
+  .reveal.in .channels--six .channel:nth-child(1){animation-delay:.05s,.12s;}
+  .reveal.in .channels--six .channel:nth-child(2){animation-delay:.11s,.25s;}
+  .reveal.in .channels--six .channel:nth-child(3){animation-delay:.17s,.38s;}
+  .reveal.in .channels--six .channel:nth-child(4){animation-delay:.23s,.51s;}
+  .reveal.in .channels--six .channel:nth-child(5){animation-delay:.29s,.64s;}
+  .reveal.in .channels--six .channel:nth-child(6){animation-delay:.35s,.77s;}
 }
 @keyframes channelIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+@keyframes channelSweep{0%,100%{border-color:var(--steel-line);box-shadow:none;}45%{border-color:rgba(255,92,53,.6);box-shadow:0 0 18px -4px rgba(255,92,53,.32);}}
+
+/* ---- section 03 framing arrow: slides once today→tomorrow on entry. desktop only — on mobile the arrow points down (rotate 90deg), so we leave it be. ---- */
+@media(min-width:861px) and (prefers-reduced-motion:no-preference){
+  .states.reveal .state-arrow{opacity:0;transform:translateX(-14px);}
+  .states.reveal.in .state-arrow{animation:arrowSlide .55s ease .35s both;}
+}
+@keyframes arrowSlide{0%{opacity:0;transform:translateX(-14px);}60%{opacity:1;transform:translateX(3px);}100%{opacity:1;transform:translateX(0);}}
+
+/* ---- section 08 recap: the three wins build in ~120ms apart, then the closing thesis lands last ---- */
+@media(prefers-reduced-motion:no-preference){
+  .steps--recap.reveal{opacity:1;transform:none;}          /* container stays put; its children own the motion */
+  .steps--recap.reveal .step{opacity:0;}
+  .steps--recap.reveal.in .step{animation:winIn .5s ease forwards;}
+  .steps--recap.reveal.in .step:nth-child(1){animation-delay:.05s;}
+  .steps--recap.reveal.in .step:nth-child(2){animation-delay:.17s;}
+  .steps--recap.reveal.in .step:nth-child(3){animation-delay:.29s;}
+  .payoff-close.reveal{transition-delay:.5s;}              /* fades in after the three wins have built */
+}
+@keyframes winIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
 
 /* ============================================================ LIGHTBOX ============================================================ */
 .frame--zoom .frame__body{cursor:zoom-in;}
