@@ -144,6 +144,8 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
 .tag{display:inline-block;font-family:var(--mono);font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:.35rem .65rem;border-radius:4px;margin-bottom:1.2rem;}
 /* pricing slide: compact spacing so headline, card, total, and footnote all fit one viewport */
 .section--pricing{padding-top:clamp(2rem,5vh,3.5rem);padding-bottom:clamp(2rem,5vh,3.5rem);}
+/* center the whole content block as one unit (card width), equal margins L/R; internal alignment unchanged */
+.section--pricing .section__inner{max-width:760px;}
 .section--pricing .eyebrow-row{margin-bottom:1.4rem;}
 .section--pricing .lede{margin-top:1rem;}
 .section--pricing .price-card{margin-top:1.5rem;padding:clamp(1.2rem,2.3vw,1.8rem);}
