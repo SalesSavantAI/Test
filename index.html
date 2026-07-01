@@ -188,12 +188,15 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
 .trigger{font-family:var(--mono);font-size:.7rem;letter-spacing:.05em;line-height:1.35;color:var(--on-dark-dim);border:1px solid var(--steel-line);border-radius:5px;padding:.55rem .72rem;background:var(--steel-800);white-space:normal;}
 .flow__arrow{flex:none;position:relative;color:var(--accent);font-size:1.35rem;line-height:1;}
 .flow__node{flex:none;border-radius:8px;padding:1rem 1.05rem;text-align:center;font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;}
-.node--warm{border:1px solid var(--accent);color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 4px var(--accent-soft);}
+.node--warm{position:relative;border:1px solid var(--accent);color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 4px var(--accent-soft);}
 .node--sent{border:1px solid var(--steel-line);color:var(--on-dark);background:var(--steel-800);max-width:9.5rem;white-space:normal;line-height:1.3;}
 .flow__foot{font-family:var(--sans);font-size:.8rem;color:var(--on-dark-dim);}
 
-/* ---- section 06 circuit sequence (fires once, motion only) ---- */
+/* ---- section 06 circuit sequence (motion only; runs on entry, re-entry, click) ---- */
 @media(prefers-reduced-motion:no-preference){
+  #flow06{cursor:pointer;}
+  /* ambient: a barely-there slow glow on the warm-lead node, signalling a live system at rest */
+  .node--warm::before{content:"";position:absolute;inset:-3px;border-radius:11px;z-index:-1;pointer-events:none;box-shadow:0 0 14px 2px rgba(255,92,53,.5);opacity:0;animation:warmAmbient 3.6s ease-in-out infinite;}
   .circuit-armed .trigger{opacity:0;transform:translateX(-10px);transition:opacity .3s ease,transform .3s ease;}
   .circuit-run .trigger{opacity:1;transform:none;}
   .circuit-run .flow__triggers .trigger:nth-child(1){transition-delay:.04s;}
@@ -206,6 +209,7 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
   .circuit-run .node--warm{animation:nodeFlare .34s ease .62s 1;}
   .circuit-run .node--sent{animation:sentFlare .3s ease .95s 1;}
 }
+@keyframes warmAmbient{0%,100%{opacity:0;transform:scale(.99);}50%{opacity:.28;transform:scale(1.015);}}
 @keyframes arrowPulse{0%{opacity:0;left:0;}25%{opacity:1;}75%{opacity:1;}100%{opacity:0;left:100%;}}
 @keyframes nodeFlare{0%{box-shadow:0 0 0 4px var(--accent-soft);transform:scale(1);}40%{box-shadow:0 0 0 6px rgba(255,92,53,.28),0 0 24px 5px rgba(255,92,53,.5);transform:scale(1.06);}100%{box-shadow:0 0 0 4px var(--accent-soft);transform:scale(1);}}
 @keyframes sentFlare{0%{box-shadow:0 0 0 0 rgba(255,92,53,0);border-color:var(--steel-line);transform:scale(1);}40%{box-shadow:0 0 20px 4px rgba(255,92,53,.45);border-color:var(--accent);transform:scale(1.05);}100%{box-shadow:0 0 0 0 rgba(255,92,53,0);border-color:var(--steel-line);transform:scale(1);}}
@@ -559,9 +563,18 @@ function animateStat(el){
   }
   requestAnimationFrame(tick);
 }
-/* ---- section 06 circuit: arm pills now, run the sequence once on entry ---- */
+/* ---- section 06 circuit: arm pills, then run the full sequence on entry, re-entry, or click ---- */
 const flow06=document.getElementById('flow06');
-if(flow06&&!reduce)flow06.classList.add('circuit-armed');
+if(flow06&&!reduce){
+  flow06.classList.add('circuit-armed');
+  flow06.addEventListener('click',fireFlow);
+}
+function fireFlow(){
+  if(!flow06||reduce)return;
+  flow06.classList.remove('circuit-run');
+  void flow06.offsetWidth; /* reflow so the animation restarts */
+  flow06.classList.add('circuit-run');
+}
 let current=0;
 const io=new IntersectionObserver((entries)=>{
   entries.forEach(e=>{
@@ -572,7 +585,7 @@ const io=new IntersectionObserver((entries)=>{
       dotEls.forEach((d,di)=>d.classList.toggle('on',di===i));
       dotsWrap.classList.toggle('invert',e.target.classList.contains('s-light'));
       e.target.querySelectorAll('.stat-num:not([data-done])').forEach(s=>{s.dataset.done='1';animateStat(s);});
-      if(flow06&&!reduce&&!flow06.dataset.ran&&e.target.contains(flow06)){flow06.dataset.ran='1';flow06.classList.add('circuit-run');}
+      if(flow06&&!reduce&&e.target.contains(flow06))fireFlow();
     }
   });
 },{threshold:.55});
