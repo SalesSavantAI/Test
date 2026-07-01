@@ -77,6 +77,10 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
 /* swap .slot for: <img class="shot" src="screenshot-N.png" alt=""> */
 .slot{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;background:repeating-linear-gradient(135deg,#F4F5F6 0 14px,#EFF1F2 14px 28px);color:#9AA0A6;font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;text-align:center;padding:1.5rem;}
 .shot{display:block;width:100%;height:auto;}
+/* matched pair: identical frames regardless of source image dimensions.
+   Fixed body ratio + cover/top hides any browser chrome at the top of a shot. */
+.frame--matched .frame__body{aspect-ratio:16/9;}
+.frame--matched .shot{width:100%;height:100%;object-fit:cover;object-position:top;}
 
 /* ============================================================ GRIDS ============================================================ */
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-top:2.4rem;align-items:start;}
@@ -138,6 +142,15 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
 .total .big{font-family:var(--display);font-stretch:125%;font-weight:700;font-size:clamp(1.8rem,3.4vw,2.6rem);color:var(--accent);}
 .consolidation-note{margin-top:1rem;font-size:.82rem;line-height:1.55;color:var(--on-dark-dim);}
 .tag{display:inline-block;font-family:var(--mono);font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:.35rem .65rem;border-radius:4px;margin-bottom:1.2rem;}
+/* pricing slide: compact spacing so headline, card, total, and footnote all fit one viewport */
+.section--pricing{padding-top:clamp(2rem,5vh,3.5rem);padding-bottom:clamp(2rem,5vh,3.5rem);}
+.section--pricing .eyebrow-row{margin-bottom:1.4rem;}
+.section--pricing .lede{margin-top:1rem;}
+.section--pricing .price-card{margin-top:1.5rem;padding:clamp(1.2rem,2.3vw,1.8rem);}
+.section--pricing .tag{margin-bottom:.9rem;}
+.section--pricing .line{padding:.72rem 0;}
+.section--pricing .total{margin-top:1rem;padding-top:1rem;}
+.section--pricing .consolidation-note{margin-top:.8rem;}
 
 /* ============================================================ BENCHMARK STATS + CTA ============================================================ */
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1.2rem,3vw,2.4rem);margin-top:2.8rem;}
@@ -471,7 +484,7 @@ body{font-family:var(--sans);background:var(--steel-900);color:var(--on-dark);-w
   </section>
 
   <!-- ============ 09 · PRICING ============ -->
-  <section class="section s-darker" data-label="Investment">
+  <section class="section s-darker section--pricing" data-label="Investment">
     <div class="section__inner">
       <div class="eyebrow-row reveal">
         <span class="plate"><span class="tick"></span>Investment · Ballpark Estimate</span>
